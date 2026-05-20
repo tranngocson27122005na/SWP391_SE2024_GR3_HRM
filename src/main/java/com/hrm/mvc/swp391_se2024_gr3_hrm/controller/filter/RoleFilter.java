@@ -33,7 +33,7 @@ public class RoleFilter implements Filter {
                             req.getRequestDispatcher("/view/admin/user-list.jsp").forward(req, res);
                             return;
                         case 3: // Admin Advanced
-                            req.getRequestDispatcher("/view/admin/admin-advance/role-list.jsp").forward(req, res);
+                            req.getRequestDispatcher("/view/admin-advance/role-list.jsp").forward(req, res);
                             return;
                         default:
                             res.sendRedirect(req.getContextPath() + "/login.jsp");
