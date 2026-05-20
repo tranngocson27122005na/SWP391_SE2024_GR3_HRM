@@ -55,27 +55,37 @@ public class RoleFilter implements Filter {
             return;
         }
 
-        // Các chức năng chỉ dành cho Admin (roleId == 2) hoặc Admin Advanced (roleId == 3)
-        if (path.equals("/user-list") || path.equals("/user-toggle")) {
-            if (roleId == 2 || roleId == 3) {
-                chain.doFilter(request, response);
-            } else {
-                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập chức năng này!");
+        String uri = req.getRequestURI();
+        String contextPath = req.getContextPath();
+        String path = uri.substring(contextPath.length());
+
+        if (session != null) {
+            Account account = (Account) session.getAttribute("account"); // account đã lưu khi login
+            if (account != null) {
+                Integer roleId = account.getRoleId();
+
+                if (roleId != null) {
+                    // Chỉ chuyển hướng nếu truy cập trang chủ/login/root khi đã đăng nhập
+                    if (path.equals("/") || path.equals("/login") || path.equals("/view/common/login.jsp") || path.equals("/view/common/home.jsp")) {
+                        switch (roleId) {
+                            case 1: // Common
+                                req.getRequestDispatcher("/profile").forward(req, res);
+                                return;
+                            case 2: // Admin
+                                req.getRequestDispatcher("/view/admin/user-list.jsp").forward(req, res);
+                                return;
+                            case 3: // Admin Advanced
+                                req.getRequestDispatcher("/view/admin-advance/role-list.jsp").forward(req, res);
+                                return;
+                            default:
+                                res.sendRedirect(req.getContextPath() + "/view/common/login.jsp");
+                                return;
+                        }
+                    }
+                }
             }
             return;
         }
-
-        // Các chức năng chỉ dành cho Admin Advanced (roleId == 3)
-        if (path.equals("/role-list") || path.equals("/permission-list")) {
-            if (roleId == 3) {
-                chain.doFilter(request, response);
-            } else {
-                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập chức năng này!");
-            }
-            return;
-        }
-
-        // Các đường dẫn khác cho phép đi qua
         chain.doFilter(request, response);
     }
 }
