@@ -23,6 +23,10 @@ public class MapperTest {
 
             // Mở session
             try (SqlSession session = sqlSessionFactory.openSession()) {
+
+
+
+
                 // Lấy mapper runtime
                 AccountMapper mapper = session.getMapper(AccountMapper.class);
 
