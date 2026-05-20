@@ -514,6 +514,13 @@
     <div class="content">
         <div class="profile-container">
 
+            <!-- Success Alert Notification -->
+            <c:if test="${param.success == 'true'}">
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; color: var(--success); padding: 12px 16px; border-radius: 8px; font-size: 0.825rem; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-weight: 500;">
+                    <span>✔</span> Cập nhật thông tin hồ sơ thành công!
+                </div>
+            </c:if>
+
             <!-- Check if profile details are loaded -->
             <c:choose>
                 <c:when test="${not empty profile}">
@@ -541,9 +548,12 @@
                                         <strong>Tài khoản:</strong> @${account.username}
                                     </span>
                                 </div>
-                                <div class="profile-sub-row" style="margin-top: 10px; align-items: center;">
+                                <div class="profile-sub-row" style="margin-top: 10px; align-items: center; gap: 8px;">
                                     <a href="${pageContext.request.contextPath}/change-password" style="text-decoration: none; font-size: 0.75rem; font-weight: 600; color: var(--accent); background: var(--accent-bg); padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bfdbfe; transition: var(--transition);">
                                         🔑 Đổi mật khẩu
+                                    </a>
+                                    <a href="${pageContext.request.contextPath}/edit-profile" style="text-decoration: none; font-size: 0.75rem; font-weight: 600; color: var(--text); background: var(--surface); padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--border); transition: var(--transition);">
+                                        📝 Chỉnh sửa hồ sơ
                                     </a>
                                 </div>
                             </div>
