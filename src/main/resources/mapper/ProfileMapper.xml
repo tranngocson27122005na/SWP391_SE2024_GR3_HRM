@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.ProfileMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Profile">
+    <id column="citizen_id" jdbcType="INTEGER" property="citizenId" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="nationality" jdbcType="VARCHAR" property="nationality" />
+    <result column="residence" jdbcType="VARCHAR" property="residence" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from profile
+    where citizen_id = #{citizenId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Profile">
+    insert into profile (citizen_id, full_name, date_of_birth, 
+      gender, nationality, residence, 
+      email, phone)
+    values (#{citizenId,jdbcType=INTEGER}, #{fullName,jdbcType=VARCHAR}, #{dateOfBirth,jdbcType=DATE}, 
+      #{gender,jdbcType=VARCHAR}, #{nationality,jdbcType=VARCHAR}, #{residence,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Profile">
+    update profile
+    set full_name = #{fullName,jdbcType=VARCHAR},
+      date_of_birth = #{dateOfBirth,jdbcType=DATE},
+      gender = #{gender,jdbcType=VARCHAR},
+      nationality = #{nationality,jdbcType=VARCHAR},
+      residence = #{residence,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
+    where citizen_id = #{citizenId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select citizen_id, full_name, date_of_birth, gender, nationality, residence, email, 
+    phone
+    from profile
+    where citizen_id = #{citizenId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select citizen_id, full_name, date_of_birth, gender, nationality, residence, email, 
+    phone
+    from profile
+  </select>
+</mapper>
