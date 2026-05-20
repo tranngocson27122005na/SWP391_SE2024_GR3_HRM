@@ -18,4 +18,20 @@ public class ProfileService {
             return mapper.selectByPrimaryKey(citizenId);
         }
     }
+
+    public boolean updateProfile(Profile profile) {
+        if (profile == null || profile.getCitizenId() == null) {
+            return false;
+        }
+        try (SqlSession session = MyBatisUtil.getSqlSessionFactory().openSession()) {
+            ProfileMapper mapper = session.getMapper(ProfileMapper.class);
+            int rows = mapper.updateByPrimaryKey(profile);
+            session.commit();
+            return rows > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
+
