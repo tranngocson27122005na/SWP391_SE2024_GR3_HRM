@@ -17,7 +17,43 @@ public class RoleFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        String path = req.getRequestURI().substring(req.getContextPath().length());
+
+        // Cho phép các static resources đi qua
+        if (path.startsWith("/css") || path.startsWith("/js") || path.startsWith("/images") || path.startsWith("/assets") || path.contains(".")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Cho phép login và logout đi qua
+        if (path.equals("/login") || path.equals("/view/common/login.jsp") || path.equals("/logout") || path.equals("/view/common/logout.jsp")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Cho phép truy cập trực tiếp các Task theo yêu cầu (không cần login)
+        if (path.equals("/user-list") || path.equals("/user-toggle") || path.equals("/role-list") || path.equals("/permission-list")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         HttpSession session = req.getSession(false);
+        Account account = (session != null) ? (Account) session.getAttribute("account") : null;
+
+        if (account == null) {
+            // Chưa đăng nhập, redirect về trang login
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        // Đã đăng nhập. Kiểm tra quyền truy cập theo role
+        Integer roleId = account.getRoleId();
+
+        if (path.equals("/") || path.equals("/home") || path.equals("/view/common/home.jsp")) {
+            // Cho phép truy cập trang home chung
+            chain.doFilter(request, response);
+            return;
+        }
 
         String uri = req.getRequestURI();
         String contextPath = req.getContextPath();
@@ -48,6 +84,7 @@ public class RoleFilter implements Filter {
                     }
                 }
             }
+            return;
         }
         chain.doFilter(request, response);
     }

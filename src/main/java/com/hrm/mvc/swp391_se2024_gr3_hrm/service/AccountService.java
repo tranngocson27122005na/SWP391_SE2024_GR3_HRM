@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.List;
 
 public class AccountService {
 
@@ -31,6 +32,38 @@ public class AccountService {
                 if (Boolean.FALSE.equals(account.getIsActive())) return null;
 
                 return account;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Account> loadAllAccounts() {
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                AccountMapper mapper = session.getMapper(AccountMapper.class);
+                return mapper.selectAll();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean toggleAccountStatus(Integer accountId) {
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            try (SqlSession session = sqlSessionFactory.openSession(true)) {
+                AccountMapper mapper = session.getMapper(AccountMapper.class);
+                Account account = mapper.selectByPrimaryKey(accountId);
+                if (account != null) {
+                    account.setIsActive(!account.getIsActive());
+                    mapper.updateByPrimaryKey(account);
+                    return true;
+                }
+                return false;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
