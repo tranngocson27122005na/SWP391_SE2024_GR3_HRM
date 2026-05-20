@@ -287,10 +287,10 @@
     <!-- Menu chung cho tất cả role -->
     <div class="nav-section">
         <div class="nav-label">Tổng quan</div>
-        <a class="nav-item active" href="#">
+        <a class="nav-item active" href="${pageContext.request.contextPath}/view/common/home.jsp">
             <span class="nav-icon">⊞</span> Dashboard
         </a>
-        <a class="nav-item" href="#">
+        <a class="nav-item" href="${pageContext.request.contextPath}/profile">
             <span class="nav-icon">◎</span> Hồ sơ cá nhân
         </a>
     </div>
