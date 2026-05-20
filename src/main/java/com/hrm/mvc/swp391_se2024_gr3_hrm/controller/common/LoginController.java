@@ -54,13 +54,13 @@ public class LoginController extends HttpServlet {
             // Điều hướng theo role
             Integer roleId = account.getRoleId();
             if (roleId == 1) {
-                resp.sendRedirect(req.getContextPath() + "/view/common/view-profile.jsp");
+                resp.sendRedirect(req.getContextPath() + "/profile");
             } else if (roleId == 2) {
                 resp.sendRedirect(req.getContextPath() + "/view/admin/user-list.jsp");
             } else if (roleId == 3) {
-                resp.sendRedirect(req.getContextPath() + "/view/admin/admin-advance/role-list.jsp");
+                resp.sendRedirect(req.getContextPath() + "/view/admin-advance/role-list.jsp");
             } else {
-                resp.sendRedirect(req.getContextPath() + "/home.jsp");
+                resp.sendRedirect(req.getContextPath() + "/view/common/home.jsp");
             }
         } else {
             req.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu!");
