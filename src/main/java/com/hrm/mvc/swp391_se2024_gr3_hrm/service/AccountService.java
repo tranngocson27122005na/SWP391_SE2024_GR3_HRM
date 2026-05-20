@@ -74,7 +74,11 @@ public class AccountService {
             return new SqlSessionFactoryBuilder().build(reader);
         } catch (IOException e) {
             throw new RuntimeException("Lỗi cấu hình MyBatis: " + e.getMessage(), e);
+
         }
     }
 
 }
+
+
+
