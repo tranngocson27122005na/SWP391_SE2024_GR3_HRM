@@ -418,6 +418,9 @@
         <a class="nav-item active" href="${pageContext.request.contextPath}/profile">
             <span class="nav-icon">◎</span> Hồ sơ cá nhân
         </a>
+        <a class="nav-item" href="${pageContext.request.contextPath}/change-password">
+            <span class="nav-icon">🔑</span> Đổi mật khẩu
+        </a>
     </div>
 
     <!-- Menu theo role -->
@@ -538,6 +541,11 @@
                                         <strong>Tài khoản:</strong> @${account.username}
                                     </span>
                                 </div>
+                                <div class="profile-sub-row" style="margin-top: 10px; align-items: center;">
+                                    <a href="${pageContext.request.contextPath}/change-password" style="text-decoration: none; font-size: 0.75rem; font-weight: 600; color: var(--accent); background: var(--accent-bg); padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bfdbfe; transition: var(--transition);">
+                                        🔑 Đổi mật khẩu
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -635,6 +643,11 @@
                                             <c:otherwise>Common</c:otherwise>
                                         </c:choose>
                                     </span>
+                                </div>
+                                <div class="profile-sub-row" style="margin-top: 10px; align-items: center;">
+                                    <a href="${pageContext.request.contextPath}/change-password" style="text-decoration: none; font-size: 0.75rem; font-weight: 600; color: var(--accent); background: var(--accent-bg); padding: 4px 10px; border-radius: 6px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid #bfdbfe; transition: var(--transition);">
+                                        🔑 Đổi mật khẩu
+                                    </a>
                                 </div>
                             </div>
                         </div>
