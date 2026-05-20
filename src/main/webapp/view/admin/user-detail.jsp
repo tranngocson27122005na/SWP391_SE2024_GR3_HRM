@@ -5,20 +5,8 @@
 <head>
   <meta charset="UTF-8">
   <title>${accountDetail != null ? "Chi tiết tài khoản" : "Thêm tài khoản mới"}</title>
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 40px; background-color: #f8f9fa; color: #333; }
-    .container { max-width: 500px; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin: 0 auto; }
-    h2 { margin-top: 0; color: #222; border-bottom: 2px solid #dee2e6; padding-bottom: 10px; margin-bottom: 20px; }
-    .form-group { margin-bottom: 15px; }
-    label { font-weight: 600; display: block; margin-bottom: 5px; font-size: 14px; }
-    input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
-    input[readonly] { background-color: #e9ecef; color: #495057; cursor: not-allowed; }
-    .btn-submit { background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 15px; font-size: 15px; }
-    .btn-submit:hover { background-color: #0056b3; }
-    .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #6c757d; font-size: 14px; }
-    .back-link:hover { color: #343a40; }
-    .error { color: #dc3545; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 14px; }
-  </style>
+
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/user-detail.css">
 </head>
 <body>
 
