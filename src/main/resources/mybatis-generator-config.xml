@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MySQLTables" targetRuntime="MyBatis3Simple">
+        <!-- Tắt toàn bộ comment -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!-- Kết nối tới MySQL -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/hrmdb"
+                        userId="root"
+                        password="123456"/>
+
+        <!-- Thư mục sinh code -->
+        <javaModelGenerator targetPackage="com.hrm.mvc.swp391_se2024_gr3_hrm.model" targetProject="src/main/java"/>
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hrm.mvc.swp391_se2024_gr3_hrm.mapper" targetProject="src/main/java"/>
+
+        <!-- Chọn bảng -->
+        <table schema="hrmdb" tableName="role"/>
+        <table schema="hrmdb" tableName="permission"/>
+        <table schema="hrmdb" tableName="profile"/>
+        <table schema="hrmdb" tableName="account"/>
+
+    </context>
+</generatorConfiguration>
