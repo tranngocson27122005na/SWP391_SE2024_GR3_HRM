@@ -37,46 +37,7 @@ public class AccountService {
         }
     }
 
-    // --- CHỨC NĂNG 7: XEM DANH SÁCH (Tận dụng selectAll() kết hợp RowBounds) ---
-    public java.util.List<Account> getAllAccounts(int page, int pageSize) {
-        try (SqlSession session = getSqlSessionFactory().openSession()) {
-            int offset = (page - 1) * pageSize;
-            org.apache.ibatis.session.RowBounds rowBounds = new org.apache.ibatis.session.RowBounds(offset, pageSize);
-
-            // Gọi lệnh selectAll kết hợp rowBounds để MyBatis tự ngắt trang dữ liệu
-            return session.selectList("com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.AccountMapper.selectAll", null, rowBounds);
-        }
-    }
-
-    // --- CHỨC NĂNG 8: XEM CHI TIẾT (Tận dụng selectByPrimaryKey) ---
-    public Account getAccountById(int accountId) {
-        try (SqlSession session = getSqlSessionFactory().openSession()) {
-            AccountMapper mapper = session.getMapper(AccountMapper.class);
-            return mapper.selectByPrimaryKey(accountId);
-        }
-    }
-
-    // --- CHỨC NĂNG 9: THÊM MỚI (Tận dụng insert) ---
-    public boolean createAccount(Account newAccount) {
-        try (SqlSession session = getSqlSessionFactory().openSession(true)) { // true để tự động commit xuống MySQL
-            AccountMapper mapper = session.getMapper(AccountMapper.class);
-
-            newAccount.setIsActive(true); // Mặc định tài khoản mới tạo sẽ được kích hoạt
-            int rows = mapper.insert(newAccount);
-
-            return rows > 0;
-        }
-    }
-    // Thêm đoạn này vào bên trong class AccountService
-    private SqlSessionFactory getSqlSessionFactory() {
-        try {
-            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
-            return new SqlSessionFactoryBuilder().build(reader);
-        } catch (IOException e) {
-            throw new RuntimeException("Lỗi cấu hình MyBatis: " + e.getMessage(), e);
-
-        }
-    }
+}
 
 }
 
