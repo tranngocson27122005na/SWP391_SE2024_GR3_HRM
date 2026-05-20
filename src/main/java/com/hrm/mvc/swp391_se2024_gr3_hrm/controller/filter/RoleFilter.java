@@ -42,7 +42,6 @@ public class RoleFilter implements Filter {
                 }
             }
         }
-        // Nếu chưa login thì cho qua hoặc redirect login
         chain.doFilter(request, response);
     }
 }
