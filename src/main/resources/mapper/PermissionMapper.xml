@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Permission">
+    <id column="permission_id" jdbcType="INTEGER" property="permissionId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from permission
+    where permission_id = #{permissionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Permission">
+    insert into permission (permission_id, permission_name, description, 
+      role_id)
+    values (#{permissionId,jdbcType=INTEGER}, #{permissionName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{roleId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Permission">
+    update permission
+    set permission_name = #{permissionName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=INTEGER}
+    where permission_id = #{permissionId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select permission_id, permission_name, description, role_id
+    from permission
+    where permission_id = #{permissionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select permission_id, permission_name, description, role_id
+    from permission
+  </select>
+</mapper>
