@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import java.io.IOException;
 import java.io.Reader;
 
-public class formmatService {
+public class FormmatService {
     public void formmatServce(){
         try {
             // Đọc file cấu hình MyBatis
