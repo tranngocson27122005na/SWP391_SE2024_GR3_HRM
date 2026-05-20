@@ -293,6 +293,9 @@
         <a class="nav-item" href="${pageContext.request.contextPath}/profile">
             <span class="nav-icon">◎</span> Hồ sơ cá nhân
         </a>
+        <a class="nav-item" href="${pageContext.request.contextPath}/change-password">
+            <span class="nav-icon">🔑</span> Đổi mật khẩu
+        </a>
     </div>
 
     <!-- Menu theo role -->
