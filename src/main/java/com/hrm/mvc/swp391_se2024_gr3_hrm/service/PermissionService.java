@@ -29,4 +29,19 @@ public class PermissionService {
             throw new RuntimeException(e);
         }
     }
+
+    public List<Permission> loadPermissionsByRole(Integer roleId){
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                PermissionMapper permissionMapper = session.getMapper(PermissionMapper.class);
+                return permissionMapper.selectByRoleId(roleId);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

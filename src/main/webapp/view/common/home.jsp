@@ -302,9 +302,9 @@
         <c:when test="${account.roleId == 3}">
             <div class="nav-section">
                 <div class="nav-label">Quản trị</div>
-                <a class="nav-item" href="#"><span class="nav-icon">👤</span> Tài khoản</a>
-                <a class="nav-item" href="#"><span class="nav-icon">🏷</span> Vai trò</a>
-                <a class="nav-item" href="#"><span class="nav-icon">🔐</span> Phân quyền</a>
+                <a class="nav-item" href="${pageContext.request.contextPath}/user-list"><span class="nav-icon">👤</span> Tài khoản</a>
+                <a class="nav-item" href="${pageContext.request.contextPath}/role-list"><span class="nav-icon">🏷</span> Vai trò</a>
+                <a class="nav-item" href="${pageContext.request.contextPath}/permission-list"><span class="nav-icon">🔐</span> Phân quyền</a>
             </div>
             <div class="nav-section">
                 <div class="nav-label">Nhân sự</div>
@@ -425,17 +425,17 @@
 
                 <div class="section-title">Quản trị hệ thống</div>
                 <div class="card-grid">
-                    <div class="action-card">
+                    <div class="action-card" onclick="location.href='${pageContext.request.contextPath}/permission-list'">
                         <div class="action-icon icon-purple">🔐</div>
                         <div class="action-name">Phân quyền</div>
                         <div class="action-desc">Cấu hình permission theo role</div>
                     </div>
-                    <div class="action-card">
+                    <div class="action-card" onclick="location.href='${pageContext.request.contextPath}/user-list'">
                         <div class="action-icon icon-blue">👤</div>
                         <div class="action-name">Tài khoản</div>
                         <div class="action-desc">Tạo / khóa / reset tài khoản</div>
                     </div>
-                    <div class="action-card">
+                    <div class="action-card" onclick="location.href='${pageContext.request.contextPath}/role-list'">
                         <div class="action-icon icon-teal">🏷</div>
                         <div class="action-name">Vai trò</div>
                         <div class="action-desc">Quản lý role hệ thống</div>

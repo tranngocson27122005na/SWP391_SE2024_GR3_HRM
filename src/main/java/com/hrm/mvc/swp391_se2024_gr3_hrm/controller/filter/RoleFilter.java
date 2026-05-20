@@ -17,32 +17,65 @@ public class RoleFilter implements Filter {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        HttpSession session = req.getSession(false);
+        String path = req.getRequestURI().substring(req.getContextPath().length());
 
-        if (session != null) {
-            Account account = (Account) session.getAttribute("account"); // account đã lưu khi login
-            if (account != null) {
-                Integer roleId = account.getRoleId();
-
-                if (roleId != null) {
-                    switch (roleId) {
-                        case 1: // Common
-                            req.getRequestDispatcher("/view/common/profile.jsp").forward(req, res);
-                            return;
-                        case 2: // Admin
-                            req.getRequestDispatcher("/view/admin/user-list.jsp").forward(req, res);
-                            return;
-                        case 3: // Admin Advanced
-                            req.getRequestDispatcher("/view/admin-advance/role-list.jsp").forward(req, res);
-                            return;
-                        default:
-                            res.sendRedirect(req.getContextPath() + "/login.jsp");
-                            return;
-                    }
-                }
-            }
+        // Cho phép các static resources đi qua
+        if (path.startsWith("/css") || path.startsWith("/js") || path.startsWith("/images") || path.startsWith("/assets") || path.contains(".")) {
+            chain.doFilter(request, response);
+            return;
         }
-        // Nếu chưa login thì cho qua hoặc redirect login
+
+        // Cho phép login và logout đi qua
+        if (path.equals("/login") || path.equals("/view/common/login.jsp") || path.equals("/logout") || path.equals("/view/common/logout.jsp")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Cho phép truy cập trực tiếp các Task theo yêu cầu (không cần login)
+        if (path.equals("/user-list") || path.equals("/user-toggle") || path.equals("/role-list") || path.equals("/permission-list")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        HttpSession session = req.getSession(false);
+        Account account = (session != null) ? (Account) session.getAttribute("account") : null;
+
+        if (account == null) {
+            // Chưa đăng nhập, redirect về trang login
+            res.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
+
+        // Đã đăng nhập. Kiểm tra quyền truy cập theo role
+        Integer roleId = account.getRoleId();
+
+        if (path.equals("/") || path.equals("/home") || path.equals("/view/common/home.jsp")) {
+            // Cho phép truy cập trang home chung
+            chain.doFilter(request, response);
+            return;
+        }
+
+        // Các chức năng chỉ dành cho Admin (roleId == 2) hoặc Admin Advanced (roleId == 3)
+        if (path.equals("/user-list") || path.equals("/user-toggle")) {
+            if (roleId == 2 || roleId == 3) {
+                chain.doFilter(request, response);
+            } else {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập chức năng này!");
+            }
+            return;
+        }
+
+        // Các chức năng chỉ dành cho Admin Advanced (roleId == 3)
+        if (path.equals("/role-list") || path.equals("/permission-list")) {
+            if (roleId == 3) {
+                chain.doFilter(request, response);
+            } else {
+                res.sendError(HttpServletResponse.SC_FORBIDDEN, "Bạn không có quyền truy cập chức năng này!");
+            }
+            return;
+        }
+
+        // Các đường dẫn khác cho phép đi qua
         chain.doFilter(request, response);
     }
 }
