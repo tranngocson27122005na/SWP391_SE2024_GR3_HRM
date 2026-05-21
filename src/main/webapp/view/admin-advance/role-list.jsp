@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="vi">
@@ -10,7 +10,7 @@
 <jsp:include page="/fragment/top-nav.jsp" />
 <h2>Danh sách Vai trò</h2>
 
-<table border="1" cellpadding="8" cellspacing="0">
+<table>
     <thead>
     <tr>
         <th>Mã ID</th>
