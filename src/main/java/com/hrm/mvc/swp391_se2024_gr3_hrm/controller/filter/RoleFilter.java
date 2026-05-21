@@ -69,12 +69,17 @@ public class RoleFilter implements Filter {
 
         // 7. Kiểm tra quyền truy cập vào các trang admin
         if (path.startsWith("/admin/") && roleId != null && roleId != 2 && roleId != 3) {
-            res.sendRedirect(req.getContextPath() + "/profile");
+            res.sendRedirect(req.getContextPath() + "/index.jsp");
+            return;
+        }
+
+        if (path.startsWith("/admin-advance/") && roleId != null && roleId != 2 && roleId != 3) {
+            res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }
 
         if ((path.equals("/role-list") || path.equals("/permission-list")) && roleId != null && roleId != 3) {
-            res.sendRedirect(req.getContextPath() + "/profile");
+            res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }
 

@@ -13,14 +13,12 @@
     <div class="auth">
         <!-- Kiểm tra session user -->
         <c:choose>
-            <c:when test="${not empty sessionScope.user}">
-                <!-- Nếu có user trong session -->
-                <span>Xin chào, ${sessionScope.user.accountId}</span>
-                <a href="/logout">Đăng xuất</a>
+            <c:when test="${not empty sessionScope.account}">
+                <span>Xin chào, ${sessionScope.account.username}</span>
+                <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
             </c:when>
             <c:otherwise>
-                <!-- Nếu chưa login -->
-                <a href="/login">Đăng nhập</a>
+                <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>
             </c:otherwise>
         </c:choose>
     </div>

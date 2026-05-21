@@ -14,21 +14,16 @@ import java.util.List;
 
 public class AccountService {
 
-    public Account login(LoginForm loginForm) {
-
-        try {
-            // Đọc file cấu hình MyBatis
-            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+    public Account login(String username, String password) {
+        try (Reader reader = Resources.getResourceAsReader("mybatis-config.xml")) {
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
-            // Mở session
             try (SqlSession session = sqlSessionFactory.openSession()) {
-
                 AccountMapper mapper = session.getMapper(AccountMapper.class);
-                Account account = mapper.selectByUsername(loginForm.getUsername());
+                Account account = mapper.selectByUsername(username);
 
-                if (account == null) return null;                          // username không tồn tại
-                if (!account.getPassword().equals(loginForm.getPassword())) return null;  // sai mật khẩu
+                if (account == null) return null;                // username không tồn tại
+                if (!account.getPassword().equals(password)) return null;  // sai mật khẩu
                 if (Boolean.FALSE.equals(account.getIsActive())) return null;
 
                 return account;
