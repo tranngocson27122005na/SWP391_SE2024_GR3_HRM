@@ -64,7 +64,7 @@
             width: 28px; height: 28px;
             background: var(--text);
             border-radius: 6px;
-            display: flex align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             color: #fff;
             font-family: 'DM Mono', monospace;
             font-size: .75rem;
@@ -379,6 +379,7 @@
                             <th>Tên Quyền hạn (Permission)</th>
                             <th>Mô tả chức năng</th>
                             <th>Áp dụng cho vai trò</th>
+                            <th style="text-align: right;">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -406,6 +407,11 @@
                                             <c:otherwise>Role ${permission.roleId}</c:otherwise>
                                         </c:choose>
                                     </span>
+                                </td>
+                                <td style="text-align: right;">
+                                    <a href="${pageContext.request.contextPath}/edit-permission?permissionId=${permission.permissionId}" class="btn-action">
+                                        ✏️ Edit
+                                    </a>
                                 </td>
                             </tr>
                         </c:forEach>
