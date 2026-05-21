@@ -25,4 +25,29 @@ public class RoleListController extends HttpServlet {
         req.setAttribute("roles", roles);
         req.getRequestDispatcher("/view/admin-advance/role-list.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String roleIdStr = request.getParameter("roleId");
+        String isActiveStr = request.getParameter("isActive");
+
+        if (roleIdStr != null && isActiveStr != null) {
+            Integer roleId = Integer.parseInt(roleIdStr);
+            boolean isActive = "1".equals(isActiveStr);
+
+            boolean updated = roleService.updateRoleStatus(roleId, isActive);
+
+            if (updated) {
+                request.getSession().setAttribute("message", "Cập nhật trạng thái thành công!");
+            } else {
+                request.getSession().setAttribute("message", "Không tìm thấy vai trò cần cập nhật!");
+            }
+        } else {
+            request.getSession().setAttribute("message", "Thiếu dữ liệu cập nhật!");
+        }
+
+        response.sendRedirect(request.getContextPath() + "/role-list");
+    }
 }

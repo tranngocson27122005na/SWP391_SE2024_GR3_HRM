@@ -28,6 +28,31 @@ public class RoleService {
         }
     }
 
+    public boolean updateRoleStatus(Integer roleId, boolean isActive) {
+        try {
+            // Đọc file cấu hình MyBatis
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+
+            // Mở session với auto-commit
+            try (SqlSession session = sqlSessionFactory.openSession(true)) {
+                RoleMapper mapper = session.getMapper(RoleMapper.class);
+
+                // Lấy role theo id
+                Role role = mapper.selectByPrimaryKey(roleId);
+                if (role != null) {
+                    // Cập nhật trạng thái
+                    role.setIsActive(isActive);
+                    mapper.updateByPrimaryKey(role);
+                    return true;
+                }
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void main(String[] args) {
         RoleService roleService = new RoleService();
         List<Role> roles = roleService.loadRoles();
