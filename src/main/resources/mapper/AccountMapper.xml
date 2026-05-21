@@ -45,4 +45,11 @@
   <select id="selectByUsername" parameterType="String" resultMap="BaseResultMap">
     SELECT * FROM account WHERE username = #{username}
   </select>
+
+  <select id="selectByEmail" parameterType="string" resultType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account">
+    SELECT id, username, email, password, role_id
+    FROM accounts
+    WHERE email = #{email}
+  </select>
+
 </mapper>

@@ -16,5 +16,5 @@ public interface AccountMapper {
 
     Account selectByUsername(String username);
 
-
+    Account selectByEmail(String email); // thêm mới
 }

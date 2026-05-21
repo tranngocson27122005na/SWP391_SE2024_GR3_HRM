@@ -7,12 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HRM System</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/home.css">
-
 </head>
 <body>
-<jsp:include page="/fragment/top-nav.jsp" />
+<%--<jsp:include page="/fragment/top-nav.jsp" />--%>
 <!-- ══ Sidebar ══════════════════════════════════════════ -->
 <aside class="sidebar">
     <div class="sidebar-logo">
@@ -254,7 +251,7 @@
             <%-- ══ COMMON ══ --%>
             <c:otherwise>
                 <div class="section-title">Thông tin tài khoản</div>
-                <div class="info-panel" style="margin-bottom: 24px;">
+                <div class="info-panel">
                     <div class="info-row">
                         <span class="info-key">Tên đăng nhập</span>
                         <span>${account.username}</span>
@@ -265,7 +262,7 @@
                     </div>
                     <div class="info-row">
                         <span class="info-key">Trạng thái</span>
-                        <span style="color: #16a34a; font-weight: 500;">● Đang hoạt động</span>
+                        <span>● Đang hoạt động</span>
                     </div>
                 </div>
 

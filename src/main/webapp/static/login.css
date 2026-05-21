@@ -243,3 +243,17 @@ body {
     .login-right { padding: 40px 28px; border-radius: 20px; }
     .login-wrapper { border-radius: 20px; }
 }
+.forgot-password {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.forgot-password a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+.forgot-password a:hover {
+    text-decoration: underline;
+}

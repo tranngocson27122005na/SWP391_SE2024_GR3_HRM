@@ -140,8 +140,26 @@ public class AccountService {
             return false;
         }
     }
+    public Account findByEmail(String email) {
+        try {
+            // Đọc config MyBatis
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
 
+            // Mở session (auto commit = true)
+            try (SqlSession session = sqlSessionFactory.openSession(true)) {
+                AccountMapper mapper = session.getMapper(AccountMapper.class);
 
+                // Gọi mapper để tìm account theo email
+                Account account = mapper.selectByEmail(email);
+
+                return account; // nếu không có thì trả về null
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
 
 
