@@ -320,7 +320,6 @@
     </style>
 </head>
 <body>
-
 <!-- ══ Sidebar ══════════════════════════════════════════ -->
 <aside class="sidebar">
     <div class="sidebar-logo">
@@ -482,6 +481,5 @@
         </div>
     </div>
 </div>
-
 </body>
 </html>

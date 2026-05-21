@@ -22,15 +22,13 @@ public class RoleFilter implements Filter {
         String path = req.getRequestURI().substring(req.getContextPath().length());
 
         // 1. Cho phép các static resources đi qua (css, js, images, ...)
-        if (path.startsWith("/css") || path.startsWith("/js")
-                || path.startsWith("/images") || path.startsWith("/assets")
-                || path.startsWith("/static") || path.contains(".")) {
+        if (path.startsWith("/static")) {
             chain.doFilter(request, response);
             return;
         }
 
         // 2. Cho phép login và logout đi qua mà không cần kiểm tra session
-        if (path.equals("/login") || path.equals("/logout")) {
+        if (path.equals("/login") || path.equals("/logout") || path.equals("/") || path.equals("/index.jsp")) {
             chain.doFilter(request, response);
             return;
         }
@@ -49,23 +47,24 @@ public class RoleFilter implements Filter {
         Integer roleId = account.getRoleId();
 
         // 6. Nếu truy cập root "/" hoặc "/login" khi đã đăng nhập → điều hướng theo role
-        if (path.equals("/") || path.equals("/login")) {
+        if (path.equals("/") || path.equals("/index.jsp")) {
             if (roleId != null) {
                 switch (roleId) {
                     case 1: // Nhân viên thường
-                        res.sendRedirect(req.getContextPath() + "/profile");
+                        res.sendRedirect(req.getContextPath() + "/common/home");
                         return;
                     case 2: // Admin
-                        res.sendRedirect(req.getContextPath() + "/admin/user");
+                        res.sendRedirect(req.getContextPath() + "/admin/user-list");
                         return;
                     case 3: // Admin Advanced
-                        res.sendRedirect(req.getContextPath() + "/role-list");
+                        res.sendRedirect(req.getContextPath() + "/admin-advance/role-list");
                         return;
-                    default:
-                        res.sendRedirect(req.getContextPath() + "/login");
-                        return;
+
                 }
-            }
+            }else{
+                // Nếu chưa có roleId thì coi như khách → cho qua index.jsp
+                chain.doFilter(request, response);
+                return;}
         }
 
         // 7. Kiểm tra quyền truy cập vào các trang admin
