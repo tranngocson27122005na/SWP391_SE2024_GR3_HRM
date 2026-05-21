@@ -31,7 +31,6 @@
 </p>
 
 <hr>
-<p>© 2024 HRM System – SWP391 SE2024 GR3</p>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Quên mật khẩu – HRM System</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/login.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/style/login.css">
 </head>
 <body>
 <div class="forgot-wrapper">
