@@ -47,7 +47,15 @@ public class UserController extends HttpServlet {
 
             // --- CHỨC NĂNG 8: XEM CHI TIẾT TÀI KHOẢN ---
         } else if (action.equals("detail")) {
-            int id = Integer.parseInt(req.getParameter("id"));
+            int id = 0;
+            try {
+                if (req.getParameter("id") != null && !req.getParameter("id").isEmpty()) {
+                    id = Integer.parseInt(req.getParameter("id"));
+                }
+            } catch (NumberFormatException e) {
+                resp.sendRedirect(req.getContextPath() + "/admin/user?action=list");
+                return;
+            }
 
             // Nếu id > 0 -> Bấm xem chi tiết một user cụ thể đang tồn tại
             if (id > 0) {
@@ -58,6 +66,8 @@ public class UserController extends HttpServlet {
 
             // ĐƯỜNG DẪN TUYỆT ĐỐI CHUẨN (Có dấu / ở đầu để sửa lỗi 404)
             req.getRequestDispatcher("/view/admin/user-detail.jsp").forward(req, resp);
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/admin/user?action=list");
         }
     }
 
@@ -74,11 +84,19 @@ public class UserController extends HttpServlet {
             Account newAcc = new Account();
             newAcc.setUsername(req.getParameter("username"));
             newAcc.setPassword(req.getParameter("password"));
-            newAcc.setRoleId(Integer.parseInt(req.getParameter("roleId")));
+            newAcc.setIsActive(true);
 
-            // Kiểm tra và gán thuộc tính citizenId (Khớp theo model Account của nhóm bạn)
-            if (req.getParameter("citizenId") != null && !req.getParameter("citizenId").isEmpty()) {
-                newAcc.setCitizenId(Integer.parseInt(req.getParameter("citizenId")));
+            try {
+                newAcc.setRoleId(Integer.parseInt(req.getParameter("roleId")));
+
+                // Kiểm tra và gán thuộc tính citizenId (Khớp theo model Account của nhóm bạn)
+                if (req.getParameter("citizenId") != null && !req.getParameter("citizenId").isEmpty()) {
+                    newAcc.setCitizenId(Integer.parseInt(req.getParameter("citizenId")));
+                }
+            } catch (NumberFormatException e) {
+                req.setAttribute("error", "Lỗi: Mã vai trò hoặc mã công dân không hợp lệ!");
+                req.getRequestDispatcher("/view/admin/user-detail.jsp").forward(req, resp);
+                return;
             }
 
             // Gọi Service thực hiện câu lệnh INSERT xuống MySQL thông qua MyBatis
@@ -91,6 +109,8 @@ public class UserController extends HttpServlet {
                 req.setAttribute("error", "Lỗi: Không thể thêm tài khoản mới (Có thể trùng Username)!");
                 req.getRequestDispatcher("/view/admin/user-detail.jsp").forward(req, resp);
             }
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/admin/user?action=list");
         }
     }
 }

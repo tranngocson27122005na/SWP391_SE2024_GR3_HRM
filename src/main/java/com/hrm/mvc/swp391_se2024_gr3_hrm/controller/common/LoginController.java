@@ -27,6 +27,12 @@ public class LoginController extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         accountService = new AccountService();
         Account account = new Account();
+        try (Reader reader = Resources.getResourceAsReader("mybatis-config.xml")) {
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            config.getServletContext().setAttribute("sqlSessionFactory", sqlSessionFactory);
+        } catch (IOException e) {
+            throw new ServletException("Failed to init MyBatis", e);
+        }
     }
 
     @Override
@@ -54,7 +60,7 @@ public class LoginController extends HttpServlet {
             // Điều hướng theo role
             Integer roleId = account.getRoleId();
             if (roleId == 1) {
-                resp.sendRedirect(req.getContextPath() + "/profile");
+                resp.sendRedirect(req.getContextPath() + "/profile");       // role 1
             } else if (roleId == 2) {
                 resp.sendRedirect(req.getContextPath() + "/view/admin/user-list.jsp");
             } else if (roleId == 3) {
