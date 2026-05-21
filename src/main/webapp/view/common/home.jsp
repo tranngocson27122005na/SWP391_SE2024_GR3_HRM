@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -276,7 +277,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="/fragment/top-nav.jsp" />
 <!-- ══ Sidebar ══════════════════════════════════════════ -->
 <aside class="sidebar">
     <div class="sidebar-logo">

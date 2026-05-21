@@ -77,7 +77,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="/fragment/top-nav.jsp" />
 <div class="card">
     <div class="icon">👋</div>
     <h2>Đã đăng xuất</h2>
