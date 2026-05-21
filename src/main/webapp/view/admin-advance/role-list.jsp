@@ -402,10 +402,23 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="status-badge status-active">
-                                        <span class="status-dot"></span>
-                                        Đang hoạt động
-                                    </span>
+                                    <form action="${pageContext.request.contextPath}/role-list" method="post">
+                                        <input type="hidden" name="roleId" value="${role.roleId}" />
+
+                                        <label>
+                                            <input type="radio" name="isActive" value="1"
+                                                   <c:if test="${role.isActive}">checked</c:if> />
+                                            Đang hoạt động
+                                        </label>
+
+                                        <label>
+                                            <input type="radio" name="isActive" value="0"
+                                                   <c:if test="${!role.isActive}">checked</c:if> />
+                                            Không hoạt động
+                                        </label>
+
+                                        <button type="submit">Cập nhật</button>
+                                    </form>
                                 </td>
                                 <td style="text-align: right;">
                                     <a href="${pageContext.request.contextPath}/permission-list?roleId=${role.roleId}" class="btn-action">

@@ -42,6 +42,33 @@ public class PermissionService {
             throw new RuntimeException(e);
         }
     }
+    // Hàm lấy permission theo ID
+    public Permission findById(Integer permissionId) {
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            try (SqlSession session = sqlSessionFactory.openSession()) {
+                PermissionMapper mapper = session.getMapper(PermissionMapper.class);
+                return mapper.selectByPrimaryKey(permissionId);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-
+    // Hàm cập nhật permission
+    public boolean updatePermission(Permission permission) {
+        try {
+            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
+            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+            // mở session với auto-commit
+            try (SqlSession session = sqlSessionFactory.openSession(true)) {
+                PermissionMapper mapper = session.getMapper(PermissionMapper.class);
+                int rows = mapper.updateByPrimaryKey(permission);
+                return rows > 0;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
