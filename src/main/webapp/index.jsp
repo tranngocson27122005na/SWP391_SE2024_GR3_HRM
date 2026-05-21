@@ -22,6 +22,7 @@
     <title>Trang giới thiệu – MyWebApp</title>
 </head>
 <body>
+<jsp:include page="/fragment/top-nav.jsp"/>
 
 <h1>Chào mừng đến với MyWebApp</h1>
 
