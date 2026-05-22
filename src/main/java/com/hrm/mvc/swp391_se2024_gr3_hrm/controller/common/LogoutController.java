@@ -1,6 +1,5 @@
 package com.hrm.mvc.swp391_se2024_gr3_hrm.controller.common;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,17 +12,17 @@ public class LogoutController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession(false);
         if (session != null) {
             session.invalidate();
         }
         // Chuyển về trang login (hoặc URL bạn muốn)
-        resp.sendRedirect(req.getContextPath() + "/fragment/top-nav.jsp");
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         doGet(req, resp);
     }
 }

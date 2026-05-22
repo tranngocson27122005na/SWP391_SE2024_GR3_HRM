@@ -16,7 +16,7 @@ public class LoginController extends HttpServlet {
 
     private AccountService accountService;
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    public void init(ServletConfig config) {
         accountService = new AccountService();
     }
 
@@ -28,8 +28,6 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
-        // Lấy dữ liệu từ form và khởi tạo LoginForm
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
@@ -39,7 +37,6 @@ public class LoginController extends HttpServlet {
             HttpSession session = req.getSession();
             session.setAttribute("account", account);
 
-            // Điều hướng theo role
             Integer roleId = account.getRoleId();
             if (roleId == 1) {
                 resp.sendRedirect(req.getContextPath() + "/common/home");

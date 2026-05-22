@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
@@ -22,7 +22,7 @@
     <title>Trang giới thiệu – MyWebApp</title>
 </head>
 <body>
-<jsp:include page="/fragment/top-nav.jsp"/>
+
 
 <h1>Chào mừng đến với MyWebApp</h1>
 

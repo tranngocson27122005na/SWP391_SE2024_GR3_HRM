@@ -20,8 +20,7 @@ public class RoleService {
             // Mở session
             try (SqlSession session = sqlSessionFactory.openSession()) {
                 RoleMapper roleMapper = session.getMapper(RoleMapper.class);
-                List<Role> roles = roleMapper.selectAll();
-                return roles;
+                return roleMapper.selectAll();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
