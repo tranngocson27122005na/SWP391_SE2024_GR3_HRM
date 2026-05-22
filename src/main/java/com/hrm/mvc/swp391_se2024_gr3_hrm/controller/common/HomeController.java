@@ -8,17 +8,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/profile")
-public class ProfileController extends HttpServlet {
-
+@WebServlet("/common/home")
+public class HomeController extends HttpServlet {
     @Override
-    public void init() {
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-
-            throws ServletException, IOException {
-        req.getRequestDispatcher("/view/common/profile.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/view/common/home.jsp").forward(req, resp);
     }
 }

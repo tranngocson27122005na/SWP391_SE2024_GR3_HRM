@@ -1,10 +1,8 @@
-package com.hrm.mvc.swp391_se2024_gr3_hrm;
+package com.hrm.mvc.swp391_se2024_gr3_hrm.utility.executor;
 
 
 import com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.AccountMapper;
-import com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.RoleMapper;
 import com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account;
-import com.hrm.mvc.swp391_se2024_gr3_hrm.model.Role;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,7 +10,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.List;
 
 public class MapperTest {
     public static void main(String[] args) {
@@ -23,8 +20,6 @@ public class MapperTest {
 
             // Mở session
             try (SqlSession session = sqlSessionFactory.openSession()) {
-
-
 
 
                 // Lấy mapper runtime

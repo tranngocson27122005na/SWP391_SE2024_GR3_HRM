@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Trang chủ – MyWebApp</title>
+    <title>Trang chủ HRM</title>
 </head>
 <body>
 <jsp:include page="/fragment/top-nav.jsp" />
@@ -18,8 +18,5 @@
     <li>Quản lý tài khoản</li>
     <li>Thông tin liên hệ</li>
 </ul>
-
-<p><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></p>
-
 </body>
 </html>

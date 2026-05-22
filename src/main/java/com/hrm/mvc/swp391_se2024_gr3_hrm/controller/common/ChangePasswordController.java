@@ -17,7 +17,7 @@ public class ChangePasswordController extends HttpServlet {
     private AccountService accountService;
 
     @Override
-    public void init() throws ServletException {
+    public void init(){
         accountService = new AccountService();
     }
 

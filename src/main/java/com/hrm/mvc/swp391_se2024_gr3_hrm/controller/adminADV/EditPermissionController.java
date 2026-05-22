@@ -20,6 +20,7 @@ public class EditPermissionController  extends HttpServlet {
     @Override
     public void init() {
         permissionService = new PermissionService();
+        roleService = new RoleService();
     }
 
 
@@ -35,20 +36,7 @@ public class EditPermissionController  extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer id = Integer.parseInt(req.getParameter("permissionId"));
-        String name = req.getParameter("permissionName");
-        String description = req.getParameter("description");
-        Integer roleId = Integer.parseInt(req.getParameter("roleId"));
-
-        Permission permission = new Permission();
-        permission.setPermissionId(id);
-        permission.setPermissionName(name);
-        permission.setDescription(description);
-        permission.setRoleId(roleId);
-
-        permissionService.updatePermission(permission);
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.sendRedirect(req.getContextPath() + "/permission-list");
     }
 }

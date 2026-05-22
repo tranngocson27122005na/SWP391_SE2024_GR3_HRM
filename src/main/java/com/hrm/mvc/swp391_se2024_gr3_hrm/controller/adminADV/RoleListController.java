@@ -10,13 +10,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.List;
-@WebServlet("/role-list")
+@WebServlet("/admin-advance/role-list")
 public class RoleListController extends HttpServlet {
     private RoleService roleService;
 
     @Override
     public void init() {
-        roleService = new RoleService(); // dùng service bạn đã viết
+        roleService = new RoleService();
     }
 
     @Override
@@ -27,7 +27,7 @@ public class RoleListController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String roleIdStr = request.getParameter("roleId");
         String isActiveStr = request.getParameter("isActive");
@@ -39,12 +39,12 @@ public class RoleListController extends HttpServlet {
             boolean updated = roleService.updateRoleStatus(roleId, isActive);
 
             if (updated) {
-                request.getSession().setAttribute("message", "Cập nhật trạng thái thành công!");
+                request.getSession().setAttribute("message", "update successfully");
             } else {
-                request.getSession().setAttribute("message", "Không tìm thấy vai trò cần cập nhật!");
+                request.getSession().setAttribute("message", "no find selected role");
             }
         } else {
-            request.getSession().setAttribute("message", "Thiếu dữ liệu cập nhật!");
+            request.getSession().setAttribute("message", "information isn't valid");
         }
 
         response.sendRedirect(request.getContextPath() + "/role-list");

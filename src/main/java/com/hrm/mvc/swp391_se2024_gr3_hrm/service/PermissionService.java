@@ -1,9 +1,8 @@
 package com.hrm.mvc.swp391_se2024_gr3_hrm.service;
 
 import com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.PermissionMapper;
-import com.hrm.mvc.swp391_se2024_gr3_hrm.mapper.RoleMapper;
+
 import com.hrm.mvc.swp391_se2024_gr3_hrm.model.Permission;
-import com.hrm.mvc.swp391_se2024_gr3_hrm.model.Role;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -22,8 +21,7 @@ public class PermissionService {
             // Mở session
             try (SqlSession session = sqlSessionFactory.openSession()) {
                 PermissionMapper permissionMapper = session.getMapper(PermissionMapper.class);
-                List<Permission> permissions = permissionMapper.selectAll();
-                return permissions;
+                return permissionMapper.selectAll();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -56,19 +54,4 @@ public class PermissionService {
         }
     }
 
-    // Hàm cập nhật permission
-    public boolean updatePermission(Permission permission) {
-        try {
-            Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
-            SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-            // mở session với auto-commit
-            try (SqlSession session = sqlSessionFactory.openSession(true)) {
-                PermissionMapper mapper = session.getMapper(PermissionMapper.class);
-                int rows = mapper.updateByPrimaryKey(permission);
-                return rows > 0;
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }
