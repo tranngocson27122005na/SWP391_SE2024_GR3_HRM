@@ -15,6 +15,4 @@ public interface AccountMapper {
     int updateByPrimaryKey(Account row);
 
     Account selectByUsername(String username);
-
-    Account selectByEmail(String email); // thêm mới
 }

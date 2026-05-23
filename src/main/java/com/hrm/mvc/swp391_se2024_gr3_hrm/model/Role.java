@@ -5,6 +5,8 @@ public class Role {
 
     private String roleName;
 
+    private String roleDescription;
+
     private Boolean isActive;
 
     public Integer getRoleId() {
@@ -21,6 +23,14 @@ public class Role {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public String getRoleDescription() {
+        return roleDescription;
+    }
+
+    public void setRoleDescription(String roleDescription) {
+        this.roleDescription = roleDescription;
     }
 
     public Boolean getIsActive() {

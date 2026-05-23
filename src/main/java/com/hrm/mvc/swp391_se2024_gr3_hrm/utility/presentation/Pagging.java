@@ -1,4 +1,4 @@
-package com.hrm.mvc.swp391_se2024_gr3_hrm.utility;
+package com.hrm.mvc.swp391_se2024_gr3_hrm.utility.presentation;
 
 public class Pagging {
     private int size, nrpp, index;

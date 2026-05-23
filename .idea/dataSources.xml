@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="hrmdb" uuid="8648c3be-6e2b-4f25-8ab6-3a995c752cb0">
+    <data-source source="LOCAL" name="hrmdb" uuid="0a1c5049-59d5-4e2b-99c2-09dc6575cb98">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
