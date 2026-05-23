@@ -11,9 +11,9 @@ public class Profile {
 
     private String gender;
 
-    private String nationality;
+    private String address;
 
-    private String residence;
+    private String marriedStatus;
 
     private String email;
 
@@ -51,20 +51,20 @@ public class Profile {
         this.gender = gender;
     }
 
-    public String getNationality() {
-        return nationality;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNationality(String nationality) {
-        this.nationality = nationality;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getResidence() {
-        return residence;
+    public String getMarriedStatus() {
+        return marriedStatus;
     }
 
-    public void setResidence(String residence) {
-        this.residence = residence;
+    public void setMarriedStatus(String marriedStatus) {
+        this.marriedStatus = marriedStatus;
     }
 
     public String getEmail() {
