@@ -28,29 +28,6 @@ public class PermissionListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String roleIdStr = req.getParameter("roleId");
-        List<Permission> permissions;
-        Integer selectedRoleId = null;
-
-        if (roleIdStr != null && !roleIdStr.trim().isEmpty()) {
-            try {
-                selectedRoleId = Integer.parseInt(roleIdStr);
-                permissions = permissionService.loadPermissionsByRole(selectedRoleId);
-            } catch (NumberFormatException e) {
-                permissions = permissionService.loadPermissions();
-            }
-        } else {
-            permissions = permissionService.loadPermissions();
-        }
-
-        List<Role> roles = roleService.loadRoles();
-        Map<Integer, String> roleMap = roles.stream()
-                .collect(Collectors.toMap(Role::getRoleId, Role::getRoleName, (r1, r2) -> r1));
-
-        req.setAttribute("permissions", permissions);
-        req.setAttribute("roles", roles);
-        req.setAttribute("roleMap", roleMap);
-        req.setAttribute("selectedRoleId", selectedRoleId);
         req.getRequestDispatcher("/view/admin-advance/permission-list.jsp").forward(req, resp);
     }
 }

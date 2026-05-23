@@ -5,9 +5,7 @@ public class Permission {
 
     private String permissionName;
 
-    private String description;
-
-    private Integer roleId;
+    private String permissionDescription;
 
     public Integer getPermissionId() {
         return permissionId;
@@ -25,19 +23,11 @@ public class Permission {
         this.permissionName = permissionName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getPermissionDescription() {
+        return permissionDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setPermissionDescription(String permissionDescription) {
+        this.permissionDescription = permissionDescription;
     }
 }

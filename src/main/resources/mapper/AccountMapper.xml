@@ -9,8 +9,6 @@
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="citizen_id" jdbcType="INTEGER" property="citizenId" />
   </resultMap>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from account
     where account_id = #{accountId,jdbcType=INTEGER}
@@ -41,15 +39,9 @@
     select account_id, username, password, is_active, role_id, citizen_id
     from account
   </select>
-
-  <select id="selectByUsername" parameterType="String" resultMap="BaseResultMap">
-    SELECT * FROM account WHERE username = #{username}
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select account_id, username, password, is_active, role_id, citizen_id
+    from account
+    where username = #{username,jdbcType=VARCHAR}
   </select>
-
-  <select id="selectByEmail" parameterType="string" resultType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account">
-    SELECT id, username, email, password, role_id
-    FROM accounts
-    WHERE email = #{email}
-  </select>
-
 </mapper>

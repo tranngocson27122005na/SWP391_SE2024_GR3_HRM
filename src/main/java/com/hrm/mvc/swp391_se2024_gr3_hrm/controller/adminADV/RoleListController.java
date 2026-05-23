@@ -21,31 +21,12 @@ public class RoleListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Role> roles = roleService.loadRoles();
-        req.setAttribute("roles", roles);
+
         req.getRequestDispatcher("/view/admin-advance/role-list.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        String roleIdStr = request.getParameter("roleId");
-        String isActiveStr = request.getParameter("isActive");
-
-        if (roleIdStr != null && isActiveStr != null) {
-            Integer roleId = Integer.parseInt(roleIdStr);
-            boolean isActive = "1".equals(isActiveStr);
-
-            boolean updated = roleService.updateRoleStatus(roleId, isActive);
-
-            if (updated) {
-                request.getSession().setAttribute("message", "update successfully");
-            } else {
-                request.getSession().setAttribute("message", "no find selected role");
-            }
-        } else {
-            request.getSession().setAttribute("message", "information isn't valid");
-        }
 
         response.sendRedirect(request.getContextPath() + "/role-list");
     }

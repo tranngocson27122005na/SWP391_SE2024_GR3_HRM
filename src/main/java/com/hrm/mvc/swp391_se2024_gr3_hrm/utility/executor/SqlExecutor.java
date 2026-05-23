@@ -44,4 +44,8 @@ public class SqlExecutor {
             throw new RuntimeException("DB operation failed", e);
         }
     }
+
+    public static void main(String[] args) {
+
+    }
 }

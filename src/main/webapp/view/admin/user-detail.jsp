@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <title>${accountDetail != null ? "Chi tiết tài khoản" : "Thêm tài khoản mới"}</title>
 
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/style/user-detail.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/static/style/common/user-detail.css">
 </head>
 <body>
 
