@@ -46,15 +46,11 @@
     SELECT * FROM account WHERE username = #{username}
   </select>
 
-  <select id="selectByEmail" parameterType="string" resultType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account">
-    SELECT acc.account_id,
-           acc.username,
-           acc.password,
-           acc.role_id,
-           acc.is_active,
-           pro.email
-    FROM account acc
-           JOIN profile pro ON acc.citizen_id = pro.citizen_id
-    WHERE pro.email = #{email}
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT a.account_id, a.username, a.password, a.is_active, a.role_id, a.citizen_id
+    FROM account a
+    INNER JOIN profile p ON a.citizen_id = p.citizen_id
+    WHERE p.email = #{email}
+    LIMIT 1
   </select>
 </mapper>
