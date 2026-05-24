@@ -9,8 +9,6 @@
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="citizen_id" jdbcType="INTEGER" property="citizenId" />
   </resultMap>
-
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from account
     where account_id = #{accountId,jdbcType=INTEGER}
@@ -41,16 +39,9 @@
     select account_id, username, password, is_active, role_id, citizen_id
     from account
   </select>
-
-  <select id="selectByUsername" parameterType="String" resultMap="BaseResultMap">
-    SELECT * FROM account WHERE username = #{username}
-  </select>
-
-  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT a.account_id, a.username, a.password, a.is_active, a.role_id, a.citizen_id
-    FROM account a
-    INNER JOIN profile p ON a.citizen_id = p.citizen_id
-    WHERE p.email = #{email}
-    LIMIT 1
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select account_id, username, password, is_active, role_id, citizen_id
+    from account
+    where username = #{username,jdbcType=VARCHAR}
   </select>
 </mapper>

@@ -19,5 +19,6 @@
         <mapper resource="mapper/PermissionMapper.xml"/>
         <mapper resource="mapper/AccountMapper.xml"/>
         <mapper resource="mapper/ProfileMapper.xml"/>
+        <mapper resource="mapper/RolePermissionMapper.xml"/>
     </mappers>
 </configuration>

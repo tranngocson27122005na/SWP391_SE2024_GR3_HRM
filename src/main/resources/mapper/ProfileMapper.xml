@@ -5,9 +5,9 @@
     <id column="citizen_id" jdbcType="INTEGER" property="citizenId" />
     <result column="full_name" jdbcType="VARCHAR" property="fullName" />
     <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
-    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="gender" jdbcType="BIT" property="gender" />
     <result column="address" jdbcType="VARCHAR" property="address" />
-    <result column="married_status" jdbcType="VARCHAR" property="marriedStatus" />
+    <result column="married" jdbcType="BIT" property="married" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
@@ -17,32 +17,30 @@
   </delete>
   <insert id="insert" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Profile">
     insert into profile (citizen_id, full_name, date_of_birth, 
-      gender, address, married_status, 
-      email, phone)
+      gender, address, married, email, 
+      phone)
     values (#{citizenId,jdbcType=INTEGER}, #{fullName,jdbcType=VARCHAR}, #{dateOfBirth,jdbcType=DATE}, 
-      #{gender,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{marriedStatus,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR})
+      #{gender,jdbcType=BIT}, #{address,jdbcType=VARCHAR}, #{married,jdbcType=BIT}, #{email,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Profile">
     update profile
     set full_name = #{fullName,jdbcType=VARCHAR},
       date_of_birth = #{dateOfBirth,jdbcType=DATE},
-      gender = #{gender,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BIT},
       address = #{address,jdbcType=VARCHAR},
-      married_status = #{marriedStatus,jdbcType=VARCHAR},
+      married = #{married,jdbcType=BIT},
       email = #{email,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR}
     where citizen_id = #{citizenId,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select citizen_id, full_name, date_of_birth, gender, address, married_status, email, 
-    phone
+    select citizen_id, full_name, date_of_birth, gender, address, married, email, phone
     from profile
     where citizen_id = #{citizenId,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap">
-    select citizen_id, full_name, date_of_birth, gender, address, married_status, email, 
-    phone
+    select citizen_id, full_name, date_of_birth, gender, address, married, email, phone
     from profile
   </select>
 </mapper>

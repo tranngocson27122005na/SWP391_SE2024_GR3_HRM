@@ -20,28 +20,43 @@ public class SqlExecutor {
         }
     }
 
+
+    public static <T, R> R execute(Class<T> mapperClass, Function<T, R> action) {
+        try (SqlSession session = sqlSessionFactory.openSession(true)) {
+            T mapper = session.getMapper(mapperClass);
+            return action.apply(mapper);
+        }
+    }
     /**
      * created by KienPT
      * Executes a database operation using a MyBatis mapper.
+     *
      * @param mapperClass là lớp mapper.java cần gọi đến
-     * @param autoCommit ├── true:  immediate commit after each operation
-     *                   ├── false: manual commit after the action
+     * autoCommit  ├── true: immediate commit after each operation
+     *             ├── false: manual commit after the action
      * @param action a function defines the operation to perform with the mapper
      * @return of type R
      * @param <T>type of mapper interface
      * @param <R>type of result returned
      */
-    public static <T, R> R execute(Class<T> mapperClass, boolean autoCommit, Function<T, R> action) {
-        try (SqlSession session = sqlSessionFactory.openSession(autoCommit)) {
+    public static <T, R> R executeTransaction(Class<T> mapperClass, Function<T, R> action) {
+        SqlSession session = null;
+        try {
+            session = sqlSessionFactory.openSession(false);
             T mapper = session.getMapper(mapperClass);
+
             R result = action.apply(mapper);
 
-            if (!autoCommit) {
-                session.commit();
-            }
+            session.commit();
             return result;
+
         } catch (Exception e) {
-            throw new RuntimeException("DB operation failed", e);
+            session.rollback();
+            throw new RuntimeException(e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
     }
 

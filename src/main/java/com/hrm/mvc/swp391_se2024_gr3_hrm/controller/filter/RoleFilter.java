@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account;
-
+import com.hrm.mvc.swp391_se2024_gr3_hrm.utility.enums.Role;
 @WebFilter("/*")  // Áp dụng cho tất cả request
 public class RoleFilter implements Filter {
 
@@ -30,18 +30,18 @@ public class RoleFilter implements Filter {
             res.sendRedirect(req.getContextPath() + "/login");
             return;
         }
-        Integer roleId = account.getRoleId();
+        Role role = Role.fromId(account.getRoleId());
 
         if (path.isEmpty()) {
-            if (roleId != null) {
-                switch (roleId) {
-                    case 1:
+            if (role != null) {
+                switch (role) {
+                    case COMMON:
                         res.sendRedirect(req.getContextPath() + "/common/home");
                         return;
-                    case 2:
+                    case ADMIN:
                         res.sendRedirect(req.getContextPath() + "/admin/user-list");
                         return;
-                    case 3:
+                    case ADMIN_ADVANCED:
                         res.sendRedirect(req.getContextPath() + "/admin-advance/role-list");
                         return;
 
@@ -51,12 +51,12 @@ public class RoleFilter implements Filter {
                 return;}
         }
 
-        if (path.startsWith("/admin/") && roleId != null && roleId != 2 && roleId != 3) {
+        if (path.startsWith("/admin/") && role != Role.ADMIN && role != Role.ADMIN_ADVANCED) {
             res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }
 
-        if (path.startsWith("/admin-advance/") && roleId != null && roleId != 2 && roleId != 3) {
+        if (path.startsWith("/admin-advance/") && role != Role.ADMIN_ADVANCED) {
             res.sendRedirect(req.getContextPath() + "/index.jsp");
             return;
         }
