@@ -33,4 +33,10 @@
     select role_id, role_name, role_description, is_active
     from role
   </select>
+  <select id="selectActiveRoles" resultMap="BaseResultMap">
+    select role_id, role_name, role_description, is_active
+    from role
+    where is_active = 1
+    order by role_id
+  </select>
 </mapper>

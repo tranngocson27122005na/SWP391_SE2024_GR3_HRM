@@ -43,4 +43,17 @@
     select citizen_id, full_name, date_of_birth, gender, address, married, email, phone
     from profile
   </select>
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select citizen_id, full_name, date_of_birth, gender, address, married, email, phone
+    from profile
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+  <select id="countByEmailExceptCitizen" resultType="int">
+    select count(*)
+    from profile
+    where email = #{email,jdbcType=VARCHAR}
+    <if test="citizenId != null">
+      and citizen_id != #{citizenId,jdbcType=INTEGER}
+    </if>
+  </select>
 </mapper>

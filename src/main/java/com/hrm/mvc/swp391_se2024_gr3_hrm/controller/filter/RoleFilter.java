@@ -18,7 +18,8 @@ public class RoleFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         String path = req.getServletPath();
 
-        if (path.equals("/login") || path.equals("/logout") || path.equals("/")|| path.equals("/index.jsp")){
+        if (path.equals("/login") || path.equals("/logout") || path.equals("/forgot-password")
+                || path.equals("/")|| path.equals("/index.jsp")){
             chain.doFilter(request, response);
             return;
         }

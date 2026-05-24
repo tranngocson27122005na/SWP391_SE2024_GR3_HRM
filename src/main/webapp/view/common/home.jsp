@@ -11,12 +11,18 @@
 <jsp:include page="/fragment/top-nav.jsp" />
 
 <h2>Xin chào, ${sessionScope.user.username}</h2>
-<p>Chào mừng bạn đến với trang chủ của hệ thống HRM/MyWebApp.</p>
+<p>Chào mừng bạn đến với hệ thống HRM.</p>
 
 <ul>
-    <li>Xem hồ sơ cá nhân</li>
-    <li>Quản lý tài khoản</li>
-    <li>Thông tin liên hệ</li>
+    <li><a href="${pageContext.request.contextPath}/profile">Xem hồ sơ cá nhân</a></li>
+    <li><a href="${pageContext.request.contextPath}/edit-profile">Chỉnh sửa hồ sơ</a></li>
+    <li><a href="${pageContext.request.contextPath}/change-password">Đổi mật khẩu</a></li>
+    <c:if test="${sessionScope.account.roleId == 2 || sessionScope.account.roleId == 3}">
+        <li><a href="${pageContext.request.contextPath}/admin/user-list">Quản lý tài khoản</a></li>
+    </c:if>
+    <c:if test="${sessionScope.account.roleId == 3}">
+        <li><a href="${pageContext.request.contextPath}/admin-advance/role-list">Quản lý vai trò &amp; phân quyền</a></li>
+    </c:if>
 </ul>
 </body>
 </html>

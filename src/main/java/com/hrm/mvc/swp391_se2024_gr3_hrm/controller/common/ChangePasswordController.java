@@ -24,14 +24,50 @@ public class ChangePasswordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
+        if ("1".equals(req.getParameter("success"))) {
+            req.setAttribute("message", "Đổi mật khẩu thành công.");
+        }
         req.getRequestDispatcher("/view/common/change-password.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
+        HttpSession session = req.getSession(false);
+        Account account = session != null ? (Account) session.getAttribute("account") : null;
+        if (account == null) {
+            resp.sendRedirect(req.getContextPath() + "/login");
+            return;
+        }
 
-        req.getRequestDispatcher("/view/common/change-password.jsp").forward(req, resp);
+        String oldPassword = req.getParameter("oldPassword");
+        String newPassword = req.getParameter("newPassword");
+        String confirmPassword = req.getParameter("confirmPassword");
+
+        if (oldPassword == null || oldPassword.isEmpty()
+                || newPassword == null || newPassword.isEmpty()
+                || confirmPassword == null || confirmPassword.isEmpty()) {
+            req.setAttribute("error", "Vui lòng điền đầy đủ các trường.");
+            req.getRequestDispatcher("/view/common/change-password.jsp").forward(req, resp);
+            return;
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            req.setAttribute("error", "Mật khẩu mới và xác nhận không khớp.");
+            req.getRequestDispatcher("/view/common/change-password.jsp").forward(req, resp);
+            return;
+        }
+
+        boolean changed = accountService.changePassword(account.getAccountId(), oldPassword, newPassword);
+        if (!changed) {
+            req.setAttribute("error", "Mật khẩu hiện tại không đúng.");
+            req.getRequestDispatcher("/view/common/change-password.jsp").forward(req, resp);
+            return;
+        }
+
+        account.setPassword(newPassword);
+        session.setAttribute("account", account);
+        resp.sendRedirect(req.getContextPath() + "/change-password?success=1");
     }
 }
