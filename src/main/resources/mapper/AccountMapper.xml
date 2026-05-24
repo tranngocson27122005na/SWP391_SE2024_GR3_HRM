@@ -40,8 +40,8 @@
     from account
   </select>
   <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
-    SELECT account_id, username, password, is_active, role_id, citizen_id
-    FROM account
-    WHERE username = #{username,jdbcType=VARCHAR}
+    select account_id, username, password, is_active, role_id, citizen_id
+    from account
+    where username = #{username,jdbcType=VARCHAR}
   </select>
 </mapper>
