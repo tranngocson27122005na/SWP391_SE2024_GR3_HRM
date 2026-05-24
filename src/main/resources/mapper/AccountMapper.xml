@@ -44,4 +44,75 @@
     from account
     where username = #{username,jdbcType=VARCHAR}
   </select>
+  <resultMap id="AccountWithProfileMap" type="com.hrm.mvc.swp391_se2024_gr3_hrm.dto.AccountWithProfile">
+    <id column="account_id" jdbcType="INTEGER" property="accountId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="is_active" jdbcType="BIT" property="isActive" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="citizen_id" jdbcType="INTEGER" property="citizenId" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="date_of_birth" jdbcType="DATE" property="dateOfBirth" />
+    <result column="gender" jdbcType="BIT" property="gender" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="married" jdbcType="BIT" property="married" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  <sql id="AccountWithProfileSelect">
+    select a.account_id, a.username, a.password, a.is_active, a.role_id, a.citizen_id,
+           p.full_name, p.date_of_birth, p.gender, p.address, p.married, p.email, p.phone,
+           r.role_name
+    from account a
+    left join profile p on a.citizen_id = p.citizen_id
+    left join role r on a.role_id = r.role_id
+  </sql>
+  <sql id="AccountWithProfileWhere">
+    <where>
+      <if test="keyword != null and keyword != ''">
+        and (a.username like concat('%', #{keyword}, '%')
+          or p.full_name like concat('%', #{keyword}, '%')
+          or p.email like concat('%', #{keyword}, '%'))
+      </if>
+    </where>
+  </sql>
+  <select id="selectAccountsWithProfile" resultMap="AccountWithProfileMap">
+    <include refid="AccountWithProfileSelect" />
+    <include refid="AccountWithProfileWhere" />
+    order by a.account_id desc
+    limit #{limit} offset #{offset}
+  </select>
+  <select id="countAccountsWithProfile" resultType="int">
+    select count(*)
+    from account a
+    left join profile p on a.citizen_id = p.citizen_id
+    <include refid="AccountWithProfileWhere" />
+  </select>
+  <select id="selectAccountWithProfileById" resultMap="AccountWithProfileMap">
+    <include refid="AccountWithProfileSelect" />
+    where a.account_id = #{accountId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByCitizenId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select account_id, username, password, is_active, role_id, citizen_id
+    from account
+    where citizen_id = #{citizenId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByEmail" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select a.account_id, a.username, a.password, a.is_active, a.role_id, a.citizen_id
+    from account a
+    inner join profile p on a.citizen_id = p.citizen_id
+    where p.email = #{email,jdbcType=VARCHAR}
+  </select>
+  <insert id="insertGeneratedKey" parameterType="com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account"
+          useGeneratedKeys="true" keyProperty="accountId">
+    insert into account (username, password, is_active, role_id, citizen_id)
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{isActive,jdbcType=BIT}, #{roleId,jdbcType=INTEGER}, #{citizenId,jdbcType=INTEGER})
+  </insert>
+  <update id="updatePassword">
+    update account
+    set password = #{password,jdbcType=VARCHAR}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
 </mapper>

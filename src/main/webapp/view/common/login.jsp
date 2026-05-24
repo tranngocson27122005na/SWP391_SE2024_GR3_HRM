@@ -11,10 +11,9 @@
 
 <h2>Đăng nhập hệ thống HRM</h2>
 
-<!-- Hiển thị lỗi nếu có -->
-<%--<c:if test="${not empty error}">--%>
-<%--    <p style="color:red;">${error}</p>--%>
-<%--</c:if>--%>
+<c:if test="${not empty error}">
+    <p>${error}</p>
+</c:if>
 
 <form action="${pageContext.request.contextPath}/login" method="post">
     <table>

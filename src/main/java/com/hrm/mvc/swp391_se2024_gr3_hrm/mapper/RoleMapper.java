@@ -13,4 +13,6 @@ public interface RoleMapper {
     List<Role> selectAll();
 
     int updateByPrimaryKey(Role row);
+
+    List<Role> selectActiveRoles();
 }
