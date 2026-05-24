@@ -9,11 +9,11 @@ public class Profile {
 
     private Date dateOfBirth;
 
-    private String gender;
+    private Boolean gender;
 
     private String address;
 
-    private String marriedStatus;
+    private Boolean married;
 
     private String email;
 
@@ -43,11 +43,11 @@ public class Profile {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getGender() {
+    public Boolean getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Boolean gender) {
         this.gender = gender;
     }
 
@@ -59,12 +59,12 @@ public class Profile {
         this.address = address;
     }
 
-    public String getMarriedStatus() {
-        return marriedStatus;
+    public Boolean getMarried() {
+        return married;
     }
 
-    public void setMarriedStatus(String marriedStatus) {
-        this.marriedStatus = marriedStatus;
+    public void setMarried(Boolean married) {
+        this.married = married;
     }
 
     public String getEmail() {

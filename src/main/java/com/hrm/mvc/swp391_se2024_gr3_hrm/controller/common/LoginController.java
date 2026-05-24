@@ -1,6 +1,9 @@
 package com.hrm.mvc.swp391_se2024_gr3_hrm.controller.common;
 
+import com.hrm.mvc.swp391_se2024_gr3_hrm.dto.form.LoginForm;
 import com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account;
+import com.hrm.mvc.swp391_se2024_gr3_hrm.service.AccountService;
+import com.hrm.mvc.swp391_se2024_gr3_hrm.utility.enums.Role;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,7 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import com.hrm.mvc.swp391_se2024_gr3_hrm.service.AccountService;
+
 import java.io.IOException;
 
 @WebServlet("/login")
@@ -28,21 +31,22 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        LoginForm form = new LoginForm();
+        form.setUsername(req.getParameter("username"));
+        form.setPassword(req.getParameter("password"));
 
-        Account account = accountService.login(username,password);
+        Account account = accountService.login(form);
 
         if (account != null) {
             HttpSession session = req.getSession();
             session.setAttribute("account", account);
 
-            Integer roleId = account.getRoleId();
-            if (roleId == 1) {
+            Role role = Role.fromId(account.getRoleId());
+            if (role == Role.COMMON) {
                 resp.sendRedirect(req.getContextPath() + "/common/home");
-            } else if (roleId == 2) {
+            } else if (role == Role.ADMIN) {
                 resp.sendRedirect(req.getContextPath() + "/admin/user-list");
-            } else if (roleId == 3) {
+            } else if (role == Role.ADMIN_ADVANCED) {
                 resp.sendRedirect(req.getContextPath() + "/admin-advance/role-list");
             } else {
                 resp.sendRedirect(req.getContextPath() + "/");

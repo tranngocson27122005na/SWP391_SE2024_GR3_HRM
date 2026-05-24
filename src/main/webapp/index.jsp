@@ -1,18 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<%
-    jakarta.servlet.http.HttpSession s = request.getSession();
-    com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account account =
-            (com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account) s.getAttribute("account");
 
-    if (account == null) {
-        account = new com.hrm.mvc.swp391_se2024_gr3_hrm.model.Account();
-        account.setUsername("Khách tham quan");
-        account.setRoleId(0); // role giả
-        s.setAttribute("account", account);
-    }
-%>
 
 
 <!DOCTYPE html>
