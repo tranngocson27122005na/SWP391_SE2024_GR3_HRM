@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.PayrollElementMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.PayrollElement">
+    <id column="element_id" property="elementId"/>
+    <result column="element_code" property="elementCode"/>
+    <result column="element_name" property="elementName"/>
+    <result column="category" property="category"/>
+    <result column="is_taxable" property="isTaxable"/>
+    <result column="is_insurable" property="isInsurable"/>
+    <result column="calc_order" property="calcOrder"/>
+    <result column="status" property="status"/>
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from payroll_element where status = 1 order by calc_order, element_id
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap">
+    select * from payroll_element where element_code = #{elementCode} limit 1
+  </select>
+</mapper>

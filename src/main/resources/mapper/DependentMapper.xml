@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.DependentMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.Dependent">
+    <id column="dependent_id" jdbcType="INTEGER" property="dependentId" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="relationship" jdbcType="VARCHAR" property="relationship" />
+    <result column="tax_code" jdbcType="VARCHAR" property="taxCode" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.hrm.persistence.entity.Dependent" useGeneratedKeys="true" keyProperty="dependentId">
+    insert into dependent (employee_id, full_name, relationship, tax_code, start_date, end_date, status)
+    values (#{employeeId}, #{fullName}, #{relationship}, #{taxCode}, #{startDate}, #{endDate}, #{status})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.hrm.persistence.entity.Dependent">
+    update dependent set
+      full_name = #{fullName}, relationship = #{relationship}, tax_code = #{taxCode},
+      start_date = #{startDate}, end_date = #{endDate}, status = #{status}
+    where dependent_id = #{dependentId}
+  </update>
+
+  <update id="updateStatus">
+    update dependent set status = #{status} where dependent_id = #{dependentId}
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select * from dependent where dependent_id = #{dependentId}
+  </select>
+
+  <select id="selectByEmployeeId" resultType="com.hrm.dto.response.DependentResponse">
+    select dependent_id as dependentId, employee_id as employeeId, full_name as fullName,
+      relationship as relationship, tax_code as taxCode, start_date as startDate,
+      end_date as endDate, status as status, created_at as createdAt
+    from dependent where employee_id = #{employeeId}
+    order by status desc, dependent_id desc
+  </select>
+
+  <select id="countActiveByEmployeeId" resultType="int">
+    select count(*) from dependent where employee_id = #{employeeId} and status = 1
+  </select>
+</mapper>

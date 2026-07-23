@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.PayslipMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.Payslip">
+    <id column="payslip_id" property="payslipId"/>
+    <result column="batch_id" property="batchId"/>
+    <result column="employee_id" property="employeeId"/>
+    <result column="contract_id" property="contractId"/>
+    <result column="payslip_status" property="payslipStatus"/>
+    <result column="net_pay" property="netPay"/>
+    <result column="status" property="status"/>
+    <result column="created_at" property="createdAt"/>
+    <result column="employee_code" property="employeeCode"/>
+    <result column="full_name" property="fullName"/>
+  </resultMap>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="payslipId"
+          parameterType="com.hrm.persistence.entity.Payslip">
+    insert into payslip (batch_id, employee_id, contract_id, payslip_status, net_pay, status)
+    values (#{batchId}, #{employeeId}, #{contractId}, #{payslipStatus}, #{netPay}, #{status})
+  </insert>
+
+  <select id="selectByBatch" resultMap="BaseResultMap">
+    select p.*, e.employee_code, e.full_name
+    from payslip p
+    join employee e on e.employee_id = p.employee_id
+    where p.batch_id = #{batchId}
+    order by e.employee_code
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    select p.*, e.employee_code, e.full_name
+    from payslip p
+    join employee e on e.employee_id = p.employee_id
+    where p.payslip_id = #{payslipId}
+  </select>
+</mapper>

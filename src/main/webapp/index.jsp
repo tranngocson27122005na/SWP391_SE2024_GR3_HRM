@@ -1,38 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
-
-
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <title>Trang giới thiệu – MyWebApp</title>
-</head>
-<body>
-
-
-<h1>Chào mừng đến với MyWebApp</h1>
-
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <c:choose>
-    <c:when test="${not empty user}">
-        <!-- Nếu đã đăng nhập -->
-        <p>Xin chào, ${user.username}!</p>
-        <p>Bạn có thể truy cập <a href="${pageContext.request.contextPath}/home">Trang chủ</a> để xem chi tiết thông tin công ty.</p>
-        <p><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></p>
+    <c:when test="${not empty sessionScope.userSession}">
+        <c:redirect url="${pageContext.request.contextPath}/home"/>
     </c:when>
     <c:otherwise>
-        <!-- Nếu chưa đăng nhập -->
-        <h3>Thông tin cơ bản về công ty</h3>
-        <ul>
-            <li>Thành lập năm 2020</li>
-            <li>Lĩnh vực: Quản lý nhân sự</li>
-            <li>Trụ sở: Hà Nội</li>
-        </ul>
-        <p>Để xem chi tiết hồ sơ công ty và các dịch vụ, vui lòng <a href="${pageContext.request.contextPath}/login">Đăng nhập</a>.</p>
+        <c:redirect url="${pageContext.request.contextPath}/login"/>
     </c:otherwise>
 </c:choose>
-
-</body>
-</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.SysUser">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password_hash" jdbcType="VARCHAR" property="passwordHash" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hrm.persistence.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
+    insert into sys_user (username, password_hash, employee_id, status)
+    values (#{username,jdbcType=VARCHAR}, #{passwordHash,jdbcType=VARCHAR},
+      #{employeeId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hrm.persistence.entity.SysUser">
+    update sys_user
+    set username = #{username,jdbcType=VARCHAR},
+      password_hash = #{passwordHash,jdbcType=VARCHAR},
+      employee_id = #{employeeId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select user_id, username, password_hash, employee_id, status, created_at
+    from sys_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select user_id, username, password_hash, employee_id, status, created_at
+    from sys_user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select user_id, username, password_hash, employee_id, status, created_at
+    from sys_user
+  </select>
+  <update id="updatePasswordHash">
+    update sys_user
+    set password_hash = #{passwordHash,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatus">
+    update sys_user
+    set status = #{status,jdbcType=TINYINT}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <sql id="AdminListWhere">
+    <where>
+      <if test="status != null">
+        AND u.status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="keyword != null and keyword != ''">
+        AND (
+          u.username LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+          OR e.full_name LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+          OR e.employee_code LIKE CONCAT('%', #{keyword,jdbcType=VARCHAR}, '%')
+        )
+      </if>
+    </where>
+  </sql>
+  <select id="countAdminList" resultType="int">
+    select count(*)
+    from sys_user u
+    left join employee e on e.employee_id = u.employee_id
+    <include refid="AdminListWhere"/>
+  </select>
+  <select id="selectAdminList" resultType="com.hrm.dto.response.SysUserResponse">
+    select
+      u.user_id as userId,
+      u.username as username,
+      u.status as status,
+      r.role_name as roleName,
+      u.employee_id as employeeId,
+      e.employee_code as employeeCode,
+      e.full_name as employeeName,
+      u.created_at as createdAt
+    from sys_user u
+    left join user_role ur on ur.user_id = u.user_id
+    left join role r on r.role_id = ur.role_id
+    left join employee e on e.employee_id = u.employee_id
+    <include refid="AdminListWhere"/>
+    order by u.user_id desc
+    limit #{limit} offset #{offset}
+  </select>
+  <select id="countActiveAdminsExcept" resultType="int">
+    select count(*)
+    from sys_user u
+    join user_role ur on ur.user_id = u.user_id
+    join role r on r.role_id = ur.role_id
+    where r.role_name = 'ADMIN'
+      and u.status = 1
+      and u.user_id &lt;&gt; #{userId,jdbcType=INTEGER}
+  </select>
+</mapper>

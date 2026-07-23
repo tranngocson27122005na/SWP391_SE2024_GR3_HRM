@@ -1,0 +1,37 @@
+.error-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg, #f4f6fb);
+    font-family: 'Segoe UI', sans-serif;
+    padding: 24px;
+}
+
+.error-card {
+    text-align: center;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 36px 40px;
+    max-width: 420px;
+}
+
+.error-card__code {
+    font-size: 48px;
+    font-weight: 800;
+    color: #1d4ed8;
+    line-height: 1;
+    margin-bottom: 8px;
+}
+
+.error-card__title {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.error-card__desc {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 20px;
+}

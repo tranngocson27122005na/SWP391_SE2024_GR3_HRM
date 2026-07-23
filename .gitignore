@@ -37,3 +37,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# local DB dumps
+sql/_hrmdb_current_export.sql

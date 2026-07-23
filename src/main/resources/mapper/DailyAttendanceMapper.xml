@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.DailyAttendanceMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.DailyAttendance">
+    <id column="attendance_id" jdbcType="INTEGER" property="attendanceId" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="import_id" jdbcType="INTEGER" property="importId" />
+    <result column="attendance_date" jdbcType="DATE" property="attendanceDate" />
+    <result column="check_in_time" jdbcType="TIME" property="checkInTime" />
+    <result column="check_out_time" jdbcType="TIME" property="checkOutTime" />
+    <result column="work_hours" jdbcType="DECIMAL" property="workHours" />
+    <result column="ot_hours" jdbcType="DECIMAL" property="otHours" />
+    <result column="late_early_blocks" jdbcType="INTEGER" property="lateEarlyBlocks" />
+    <result column="attendance_status" jdbcType="TINYINT" property="attendanceStatus" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from daily_attendance
+    where attendance_id = #{attendanceId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hrm.persistence.entity.DailyAttendance">
+    insert into daily_attendance (attendance_id, employee_id, import_id, 
+      attendance_date, check_in_time, check_out_time, 
+      work_hours, ot_hours, late_early_blocks, 
+      attendance_status, status, created_at
+      )
+    values (#{attendanceId,jdbcType=INTEGER}, #{employeeId,jdbcType=INTEGER}, #{importId,jdbcType=INTEGER}, 
+      #{attendanceDate,jdbcType=DATE}, #{checkInTime,jdbcType=TIME}, #{checkOutTime,jdbcType=TIME}, 
+      #{workHours,jdbcType=DECIMAL}, #{otHours,jdbcType=DECIMAL}, #{lateEarlyBlocks,jdbcType=INTEGER}, 
+      #{attendanceStatus,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{createdAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hrm.persistence.entity.DailyAttendance">
+    update daily_attendance
+    set employee_id = #{employeeId,jdbcType=INTEGER},
+      import_id = #{importId,jdbcType=INTEGER},
+      attendance_date = #{attendanceDate,jdbcType=DATE},
+      check_in_time = #{checkInTime,jdbcType=TIME},
+      check_out_time = #{checkOutTime,jdbcType=TIME},
+      work_hours = #{workHours,jdbcType=DECIMAL},
+      ot_hours = #{otHours,jdbcType=DECIMAL},
+      late_early_blocks = #{lateEarlyBlocks,jdbcType=INTEGER},
+      attendance_status = #{attendanceStatus,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where attendance_id = #{attendanceId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select attendance_id, employee_id, import_id, attendance_date, check_in_time, check_out_time, 
+    work_hours, ot_hours, late_early_blocks, attendance_status, status, created_at
+    from daily_attendance
+    where attendance_id = #{attendanceId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select attendance_id, employee_id, import_id, attendance_date, check_in_time, check_out_time, 
+    work_hours, ot_hours, late_early_blocks, attendance_status, status, created_at
+    from daily_attendance
+  </select>
+</mapper>

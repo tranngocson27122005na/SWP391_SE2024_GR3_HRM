@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.PayrollBatchParamMapper">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+          parameterType="com.hrm.persistence.entity.PayrollBatchParam">
+    insert into payroll_batch_param (batch_id, param_code, param_value)
+    values (#{batchId}, #{paramCode}, #{paramValue})
+  </insert>
+
+  <insert id="insertBatch">
+    insert into payroll_batch_param (batch_id, param_code, param_value) values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.batchId}, #{item.paramCode}, #{item.paramValue})
+    </foreach>
+  </insert>
+</mapper>

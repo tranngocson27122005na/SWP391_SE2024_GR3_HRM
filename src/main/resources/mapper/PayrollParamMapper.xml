@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.PayrollParamMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.PayrollParam">
+    <id column="param_id" property="paramId"/>
+    <result column="param_code" property="paramCode"/>
+    <result column="param_value" property="paramValue"/>
+    <result column="note" property="note"/>
+    <result column="status" property="status"/>
+    <result column="updated_at" property="updatedAt"/>
+  </resultMap>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select * from payroll_param where status = 1 order by param_code
+  </select>
+
+  <update id="updateValue">
+    update payroll_param
+    set param_value = #{paramValue}, updated_at = NOW()
+    where param_code = #{paramCode}
+  </update>
+</mapper>

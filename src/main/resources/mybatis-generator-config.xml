@@ -5,27 +5,37 @@
 
 <generatorConfiguration>
     <context id="MySQLTables" targetRuntime="MyBatis3Simple">
-        <!-- no comment -->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
             <property name="suppressDate" value="true"/>
         </commentGenerator>
-        <!-- connect to MySQL -->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/hrmdb_new"
+                        connectionURL="jdbc:mysql://localhost:3306/hrmdb?useInformationSchema=true"
                         userId="root"
                         password="123456"/>
 
-        <!-- folder generate code -->
-        <javaModelGenerator targetPackage="com.hrm.mvc.swp391_se2024_gr3_hrm.model" targetProject="src/main/java"/>
+        <javaModelGenerator targetPackage="com.hrm.persistence.entity" targetProject="src/main/java"/>
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hrm.mvc.swp391_se2024_gr3_hrm.mapper" targetProject="src/main/java"/>
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hrm.persistence.mapper" targetProject="src/main/java"/>
 
-        <!--  use tables in db -->
+        <!-- 13 tables — khớp sql/0.hrmdb.sql -->
+        <!-- Domain 1: Organization -->
+        <table schema="hrmdb" tableName="department"/>
+        <table schema="hrmdb" tableName="job_position"/>
+        <!-- Domain 2: Authority -->
+        <table schema="hrmdb" tableName="sys_user"/>
         <table schema="hrmdb" tableName="role"/>
+        <table schema="hrmdb" tableName="user_role"/>
         <table schema="hrmdb" tableName="permission"/>
-        <table schema="hrmdb" tableName="profile"/>
-        <table schema="hrmdb" tableName="account"/>
-        <table schema="hrmdb" tableName="role_permission"/>
+        <table schema="hrmdb" tableName="position_permission"/>
+        <!-- Domain 3: Employee -->
+        <table schema="hrmdb" tableName="employee"/>
+        <table schema="hrmdb" tableName="contract"/>
+        <!-- Domain 4: Attendance -->
+        <table schema="hrmdb" tableName="attendance_import"/>
+        <table schema="hrmdb" tableName="daily_attendance"/>
+        <table schema="hrmdb" tableName="attendance_summary"/>
+        <table schema="hrmdb" tableName="leave_balance"/>
+        <!-- Domain 5: Payroll — chưa có bảng trong sql/0.hrmdb.sql -->
     </context>
 </generatorConfiguration>
