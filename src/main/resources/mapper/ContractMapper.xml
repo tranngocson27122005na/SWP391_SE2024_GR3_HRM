@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.ContractMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.Contract">
+    <id column="contract_id" jdbcType="INTEGER" property="contractId" />
+    <result column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="contract_type" jdbcType="TINYINT" property="contractType" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="basic_salary" jdbcType="DECIMAL" property="basicSalary" />
+    <result column="salary_type" jdbcType="TINYINT" property="salaryType" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.hrm.persistence.entity.Contract" useGeneratedKeys="true" keyProperty="contractId">
+    insert into contract (employee_id, contract_type, start_date, end_date, basic_salary, salary_type, status)
+    values (#{employeeId,jdbcType=INTEGER}, #{contractType,jdbcType=TINYINT}, #{startDate,jdbcType=DATE},
+      #{endDate,jdbcType=DATE}, #{basicSalary,jdbcType=DECIMAL}, #{salaryType,jdbcType=TINYINT}, #{status,jdbcType=TINYINT})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.hrm.persistence.entity.Contract">
+    update contract
+    set employee_id = #{employeeId,jdbcType=INTEGER},
+      contract_type = #{contractType,jdbcType=TINYINT},
+      start_date = #{startDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      basic_salary = #{basicSalary,jdbcType=DECIMAL},
+      salary_type = #{salaryType,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT}
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateStatus">
+    update contract set status = #{status,jdbcType=TINYINT}
+    where contract_id = #{contractId,jdbcType=INTEGER}
+  </update>
+
+  <update id="inactiveAllActiveByEmployee">
+    update contract set status = 0
+    where employee_id = #{employeeId,jdbcType=INTEGER} and status = 1
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select contract_id, employee_id, contract_type, start_date, end_date, basic_salary,
+    salary_type, status, created_at
+    from contract where contract_id = #{contractId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByEmployeeId" resultType="com.hrm.dto.response.ContractResponse">
+    select contract_id as contractId, employee_id as employeeId, contract_type as contractType,
+      start_date as startDate, end_date as endDate, basic_salary as basicSalary,
+      salary_type as salaryType, status as status, created_at as createdAt
+    from contract
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+    order by status desc, start_date desc, contract_id desc
+  </select>
+</mapper>

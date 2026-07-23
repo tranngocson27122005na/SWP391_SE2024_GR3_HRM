@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.Employee">
+    <id column="employee_id" jdbcType="INTEGER" property="employeeId" />
+    <result column="employee_code" jdbcType="VARCHAR" property="employeeCode" />
+    <result column="full_name" jdbcType="VARCHAR" property="fullName" />
+    <result column="gender" jdbcType="TINYINT" property="gender" />
+    <result column="birth_date" jdbcType="DATE" property="birthDate" />
+    <result column="bank_account" jdbcType="VARCHAR" property="bankAccount" />
+    <result column="position_id" jdbcType="INTEGER" property="positionId" />
+    <result column="employment_group" jdbcType="TINYINT" property="employmentGroup" />
+    <result column="joining_date" jdbcType="DATE" property="joiningDate" />
+    <result column="current_contract_id" jdbcType="INTEGER" property="currentContractId" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.hrm.persistence.entity.Employee" useGeneratedKeys="true" keyProperty="employeeId">
+    insert into employee (employee_code, full_name, gender, birth_date, bank_account,
+      position_id, employment_group, joining_date, current_contract_id, status)
+    values (#{employeeCode,jdbcType=VARCHAR}, #{fullName,jdbcType=VARCHAR}, #{gender,jdbcType=TINYINT},
+      #{birthDate,jdbcType=DATE}, #{bankAccount,jdbcType=VARCHAR},
+      #{positionId,jdbcType=INTEGER}, #{employmentGroup,jdbcType=TINYINT}, #{joiningDate,jdbcType=DATE},
+      #{currentContractId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.hrm.persistence.entity.Employee">
+    update employee
+    set employee_code = #{employeeCode,jdbcType=VARCHAR},
+      full_name = #{fullName,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=TINYINT},
+      birth_date = #{birthDate,jdbcType=DATE},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      position_id = #{positionId,jdbcType=INTEGER},
+      employment_group = #{employmentGroup,jdbcType=TINYINT},
+      joining_date = #{joiningDate,jdbcType=DATE},
+      current_contract_id = #{currentContractId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateCurrentContractId">
+    update employee
+    set current_contract_id = #{currentContractId,jdbcType=INTEGER}
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select employee_id, employee_code, full_name, gender, birth_date, bank_account, position_id,
+    employment_group, joining_date, current_contract_id, status, created_at
+    from employee
+    where employee_id = #{employeeId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByCode" resultMap="BaseResultMap">
+    select employee_id, employee_code, full_name, gender, birth_date, bank_account, position_id,
+    employment_group, joining_date, current_contract_id, status, created_at
+    from employee
+    where employee_code = #{employeeCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select employee_id, employee_code, full_name, gender, birth_date, bank_account, position_id,
+    employment_group, joining_date, current_contract_id, status, created_at
+    from employee
+  </select>
+
+  <select id="selectWithoutSysUser" resultType="com.hrm.dto.response.EmployeeResponse">
+    select e.employee_id as employeeId, e.employee_code as employeeCode, e.full_name as fullName,
+      jp.position_name as positionName, d.department_name as departmentName
+    from employee e
+    left join job_position jp on jp.position_id = e.position_id
+    left join department d on d.department_id = jp.department_id
+    left join sys_user u on u.employee_id = e.employee_id
+    where u.user_id is null
+    order by e.created_at desc
+  </select>
+
+  <sql id="EmployeeScopeJoin">
+    from employee e
+    left join job_position jp on jp.position_id = e.position_id
+    left join department d on d.department_id = jp.department_id
+  </sql>
+  <sql id="EmployeeScopeWhere">
+    where 1 = 1
+    <if test="keyword != null and keyword != ''">
+      and (
+        e.employee_code like concat('%', #{keyword,jdbcType=VARCHAR}, '%')
+        or e.full_name like concat('%', #{keyword,jdbcType=VARCHAR}, '%')
+      )
+    </if>
+    <choose>
+      <when test="scopeType == 'SELF'">
+        and e.employee_id = #{selfEmployeeId,jdbcType=BIGINT}
+      </when>
+      <when test="scopeType == 'DEPARTMENT'">
+        and jp.department_id = #{departmentId,jdbcType=BIGINT}
+      </when>
+      <when test="scopeType == 'ALL'">
+      </when>
+      <otherwise>
+        and 1 = 0
+      </otherwise>
+    </choose>
+  </sql>
+
+  <select id="countActiveByScope" resultType="int">
+    select count(*)
+    <include refid="EmployeeScopeJoin"/>
+    <include refid="EmployeeScopeWhere"/>
+  </select>
+
+  <select id="selectActiveByScope" resultType="com.hrm.dto.response.EmployeeResponse">
+    select
+      e.employee_id as employeeId,
+      e.employee_code as employeeCode,
+      e.full_name as fullName,
+      e.gender as gender,
+      e.birth_date as birthDate,
+      e.bank_account as bankAccount,
+      e.position_id as positionId,
+      jp.position_name as positionName,
+      jp.department_id as departmentId,
+      d.department_name as departmentName,
+      e.employment_group as employmentGroup,
+      e.joining_date as joiningDate,
+      e.current_contract_id as currentContractId,
+      e.status as status,
+      e.created_at as createdAt
+    <include refid="EmployeeScopeJoin"/>
+    <include refid="EmployeeScopeWhere"/>
+    order by e.created_at desc, e.employee_id desc
+    limit #{limit} offset #{offset}
+  </select>
+
+  <select id="selectDetailByScope" resultType="com.hrm.dto.response.EmployeeResponse">
+    select
+      e.employee_id as employeeId,
+      e.employee_code as employeeCode,
+      e.full_name as fullName,
+      e.gender as gender,
+      e.birth_date as birthDate,
+      e.bank_account as bankAccount,
+      e.position_id as positionId,
+      jp.position_name as positionName,
+      jp.department_id as departmentId,
+      d.department_name as departmentName,
+      e.employment_group as employmentGroup,
+      e.joining_date as joiningDate,
+      e.current_contract_id as currentContractId,
+      e.status as status,
+      e.created_at as createdAt
+    <include refid="EmployeeScopeJoin"/>
+    where e.employee_id = #{employeeId,jdbcType=INTEGER}
+    <choose>
+      <when test="scopeType == 'SELF'">
+        and e.employee_id = #{selfEmployeeId,jdbcType=BIGINT}
+      </when>
+      <when test="scopeType == 'DEPARTMENT'">
+        and jp.department_id = #{departmentId,jdbcType=BIGINT}
+      </when>
+      <when test="scopeType == 'ALL'">
+      </when>
+      <otherwise>
+        and 1 = 0
+      </otherwise>
+    </choose>
+  </select>
+</mapper>

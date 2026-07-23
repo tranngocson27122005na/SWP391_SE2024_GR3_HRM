@@ -8,17 +8,39 @@
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://localhost:3306/hrmdb_new"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/hrmdb"/>
                 <property name="username" value="root"/>
                 <property name="password" value="123456"/>
             </dataSource>
         </environment>
     </environments>
     <mappers>
+        <!-- 21 tables — khớp sql/0.hrmdb.sql -->
+        <!-- Domain 1: Organization -->
+        <mapper resource="mapper/DepartmentMapper.xml"/>
+        <mapper resource="mapper/JobPositionMapper.xml"/>
+        <!-- Domain 2: Authority -->
+        <mapper resource="mapper/SysUserMapper.xml"/>
         <mapper resource="mapper/RoleMapper.xml"/>
+        <mapper resource="mapper/UserRoleMapper.xml"/>
         <mapper resource="mapper/PermissionMapper.xml"/>
-        <mapper resource="mapper/AccountMapper.xml"/>
-        <mapper resource="mapper/ProfileMapper.xml"/>
-        <mapper resource="mapper/RolePermissionMapper.xml"/>
+        <mapper resource="mapper/PositionPermissionMapper.xml"/>
+        <!-- Domain 3: Employee -->
+        <mapper resource="mapper/EmployeeMapper.xml"/>
+        <mapper resource="mapper/ContractMapper.xml"/>
+        <mapper resource="mapper/DependentMapper.xml"/>
+        <!-- Domain 4: Attendance -->
+        <mapper resource="mapper/AttendanceImportMapper.xml"/>
+        <mapper resource="mapper/DailyAttendanceMapper.xml"/>
+        <mapper resource="mapper/AttendanceSummaryMapper.xml"/>
+        <mapper resource="mapper/LeaveBalanceMapper.xml"/>
+        <!-- Domain 5: Payroll -->
+        <mapper resource="mapper/PayrollBatchMapper.xml"/>
+        <mapper resource="mapper/PayrollParamMapper.xml"/>
+        <mapper resource="mapper/PayrollElementMapper.xml"/>
+        <mapper resource="mapper/PayslipMapper.xml"/>
+        <mapper resource="mapper/PayslipDetailMapper.xml"/>
+        <mapper resource="mapper/PayrollBatchParamMapper.xml"/>
+        <mapper resource="mapper/PayrollBatchPitBracketMapper.xml"/>
     </mappers>
 </configuration>

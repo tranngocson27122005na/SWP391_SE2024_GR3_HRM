@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.JobPositionMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.JobPosition">
+    <id column="position_id" jdbcType="INTEGER" property="positionId" />
+    <result column="position_code" jdbcType="VARCHAR" property="positionCode" />
+    <result column="position_name" jdbcType="VARCHAR" property="positionName" />
+    <result column="department_id" jdbcType="INTEGER" property="departmentId" />
+    <result column="data_scope" jdbcType="TINYINT" property="dataScope" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="updated_by" jdbcType="INTEGER" property="updatedBy" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from job_position
+    where position_id = #{positionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hrm.persistence.entity.JobPosition">
+    insert into job_position (position_id, position_code, position_name, 
+      department_id, data_scope, status, 
+      updated_by, updated_at, created_at
+      )
+    values (#{positionId,jdbcType=INTEGER}, #{positionCode,jdbcType=VARCHAR}, #{positionName,jdbcType=VARCHAR}, 
+      #{departmentId,jdbcType=INTEGER}, #{dataScope,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{updatedBy,jdbcType=INTEGER}, #{updatedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hrm.persistence.entity.JobPosition">
+    update job_position
+    set position_code = #{positionCode,jdbcType=VARCHAR},
+      position_name = #{positionName,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=INTEGER},
+      data_scope = #{dataScope,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      updated_by = #{updatedBy,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where position_id = #{positionId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select position_id, position_code, position_name, department_id, data_scope, status, 
+    updated_by, updated_at, created_at
+    from job_position
+    where position_id = #{positionId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select position_id, position_code, position_name, department_id, data_scope, status, 
+    updated_by, updated_at, created_at
+    from job_position
+  </select>
+  <select id="selectActiveWithDepartment"
+          resultType="com.hrm.dto.response.PermissionMatrixResponse$MatrixPositionRow">
+    select
+      jp.position_id as positionId,
+      jp.position_code as positionCode,
+      jp.position_name as positionName,
+      d.department_name as departmentName,
+      jp.data_scope as dataScope
+    from job_position jp
+    left join department d on d.department_id = jp.department_id
+    where jp.status = 1
+    order by d.department_name, jp.position_code
+  </select>
+</mapper>

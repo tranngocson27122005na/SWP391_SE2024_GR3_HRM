@@ -1,0 +1,202 @@
+.app-main--solo {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 48px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.toolbar input[type=text],
+.toolbar select {
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    min-width: 180px;
+    font-size: 14px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-primary { background: var(--brand); color: #fff; }
+.btn-secondary { background: #f3f4f6; color: #374151; }
+.btn-danger { background: #fee2e2; color: #b91c1c; }
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table th,
+.data-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+}
+
+.data-table th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--muted);
+}
+
+.data-table .center { text-align: center; }
+.data-table .actions { white-space: nowrap; }
+
+.badge-ok {
+    background: #ecfdf5;
+    color: #047857;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-off {
+    background: #f3f4f6;
+    color: #6b7280;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.pager {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.pager .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.pager__meta {
+    margin-left: 4px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.flash {
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+    font-size: 14px;
+}
+
+.flash--ok { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.flash--error { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+.matrix-scroll { overflow-x: auto; }
+.matrix-table th { white-space: nowrap; font-size: 11px; max-width: 140px; vertical-align: bottom; }
+.matrix-table td.matrix-sticky,
+.matrix-table th.matrix-sticky {
+    position: sticky;
+    left: 0;
+    background: #fff;
+    z-index: 1;
+    min-width: 180px;
+    text-align: left;
+}
+.matrix-table th.matrix-sticky { z-index: 2; background: #f9fafb; }
+.matrix-table small { color: var(--muted); }
+.matrix-table .matrix-scope { display: block; margin-top: 2px; }
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 10px 16px;
+    font-size: 14px;
+}
+
+.detail-grid dt { color: var(--muted); }
+.detail-grid dd { margin: 0; font-weight: 500; }
+
+.flash-error { color: #b91c1c; font-size: 14px; }
+
+/* ===== Org create/edit forms ===== */
+.org-form__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 40px;
+    align-items: start;
+}
+
+.org-form__col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.org-form__heading {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+}
+
+.org-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.org-form__field input,
+.org-form__field select {
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--ink);
+    background: #fff;
+    width: 100%;
+    font-family: inherit;
+}
+
+.org-form__field input:focus,
+.org-form__field select:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+}
+
+.org-form__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+}
+
+@media (max-width: 768px) {
+    .org-form__grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}

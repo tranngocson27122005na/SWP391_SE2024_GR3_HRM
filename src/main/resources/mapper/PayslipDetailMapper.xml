@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hrm.persistence.mapper.PayslipDetailMapper">
+  <resultMap id="BaseResultMap" type="com.hrm.persistence.entity.PayslipDetail">
+    <id column="detail_id" property="detailId"/>
+    <result column="payslip_id" property="payslipId"/>
+    <result column="element_id" property="elementId"/>
+    <result column="amount" property="amount"/>
+    <result column="remark" property="remark"/>
+    <result column="element_code" property="elementCode"/>
+    <result column="element_name" property="elementName"/>
+  </resultMap>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="detailId"
+          parameterType="com.hrm.persistence.entity.PayslipDetail">
+    insert into payslip_detail (payslip_id, element_id, amount, remark)
+    values (#{payslipId}, #{elementId}, #{amount}, #{remark})
+  </insert>
+
+  <select id="selectByPayslipId" resultMap="BaseResultMap">
+    select d.*, el.element_code, el.element_name
+    from payslip_detail d
+    join payroll_element el on el.element_id = d.element_id
+    where d.payslip_id = #{payslipId}
+    order by el.calc_order, d.detail_id
+  </select>
+</mapper>

@@ -1,0 +1,7 @@
+EmployeeCode,TotalWorkDays,ActualWorkDays,TotalPaidLeave,TotalUnpaidLeave,TotalHoliday,OT_Weekday_Hours,OT_Weekend_Hours,OT_Holiday_Hours,Late_Early_Blocks
+EMP-HRM-001,22,22,0,0,0,0,0,0,0
+EMP-HRS-001,22,21,0,0,0,0,4,0,2
+EMP-SUP-001,26,26,1,0,0,0,2,0,1
+EMP-WRK-001,26,26,0,0,0,0,0,0,4
+EMP-WRK-003,26,26,0,0,0,0,0,0,4
+EMP-WRK-004,26,26,1,0,0,80,0,0,5
